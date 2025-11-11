@@ -17,6 +17,11 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
   const [progress, setProgress] = useState<number>(0);
   const [quizStage, setQuizStage] = useState<'reading' | 'quiz' | 'done'>('reading');
   const [quizScore, setQuizScore] = useState<number>(0);
+  const [quizModalOpen, setQuizModalOpen] = useState(false);
+  const [quizBlockedUntil, setQuizBlockedUntil] = useState<{[key: string]: number}>({});
+  const [chapterJustCompleted, setChapterJustCompleted] = useState<number | null>(null);
+  const [consumables, setConsumables] = useState<number>(0); // Exemplo: quantidade de "isenta-tempo"
+  const [chapterProgressLocked, setChapterProgressLocked] = useState<{[key: string]: boolean}>({});
 
   // Carregar versículos da API ao entrar na leitura
   React.useEffect(() => {
@@ -28,7 +33,16 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
           setChapterVerses([]);
         }
       });
-      setProgress(0);
+      // Restaurar progresso salvo
+      const key = `progress_read_${selectedBook}_${selectedChapter}`;
+      let saved = 0;
+      try {
+        const raw = window?.localStorage?.getItem(key);
+        if (raw) {
+          saved = Math.max(0, Math.min(1, Number(raw)));
+        }
+      } catch {}
+      setProgress(saved);
       setQuizStage('reading');
       setQuizScore(0);
     }
@@ -89,6 +103,24 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
   const oldBooks = ALL_BIBLE_BOOKS.filter((b: any) => b.testament === 'old');
   const newBooks = ALL_BIBLE_BOOKS.filter((b: any) => b.testament === 'new');
   const canStudy = hasRequiredEquipment();
+
+  // Funções para controle de quiz
+  function canRetryQuiz(bookId: string, chapter: number) {
+    const key = `${bookId}_${chapter}`;
+    if (consumables > 0) return true;
+    const now = Date.now();
+    return !quizBlockedUntil[key] || quizBlockedUntil[key] < now;
+  }
+  function blockQuizRetry(bookId: string, chapter: number) {
+    const key = `${bookId}_${chapter}`;
+    setQuizBlockedUntil(prev => ({...prev, [key]: Date.now() + 30 * 60 * 1000}));
+  }
+  function useConsumable(bookId: string, chapter: number) {
+    if (consumables > 0) {
+      setConsumables(c => c - 1);
+      setQuizBlockedUntil(prev => ({...prev, [`${bookId}_${chapter}`]: 0}));
+    }
+  }
 
   // Renderização principal
   if (stage === 'books') {
@@ -248,11 +280,29 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
   // Renderização da leitura do capítulo
   if (stage === 'reading' && selectedBook && selectedChapter) {
     const bookInfo = oldBooks.concat(newBooks).find((b: any) => b.id === selectedBook);
+    const chapterKey = `${selectedBook}_${selectedChapter}`;
+    const isBlocked = !canRetryQuiz(selectedBook, selectedChapter);
+    const key = `${selectedBook}_${selectedChapter}`;
+    const progressValue = chapterProgressLocked[key] || isChapterComplete(selectedBook, selectedChapter) ? 1 : progress;
     function handleScroll(e: React.UIEvent<HTMLDivElement>) {
       const el = e.currentTarget;
       const scroll = el.scrollTop;
       const max = el.scrollHeight - el.clientHeight;
-      setProgress(max > 0 ? Math.min(scroll / max, 1) : 1);
+      const percent = max > 0 ? Math.min(scroll / max, 1) : 1;
+      const key = `${selectedBook}_${selectedChapter}`;
+      const localKey = `progress_read_${selectedBook}_${selectedChapter}`;
+      // Sempre trava no maior valor atingido
+      setProgress(prev => {
+        const newValue = Math.max(prev, percent);
+        try {
+          window?.localStorage?.setItem(localKey, String(newValue));
+        } catch {}
+        // Se chegou a 100%, trava
+        if (newValue === 1 && !chapterProgressLocked[key]) {
+          setChapterProgressLocked(p => ({...p, [key]: true}));
+        }
+        return newValue;
+      });
     }
     return (
       <div className="min-h-screen bg-gradient-to-b from-spiritual/5 to-gray-50 pb-20">
@@ -265,13 +315,13 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
           </div>
         </div>
         <div className="max-w-4xl mx-auto p-4">
-          {/* Barra de progresso fixa no topo */}
+          {/* Barra de progresso fixa no topo, não volta ao ser concluída */}
           <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden mb-4 sticky top-0 z-20">
             <div
               className="h-full rounded-full transition-all duration-700 flex items-center justify-center"
-              style={{ width: `${Math.round(progress * 100)}%`, background: progress === 1 ? '#22c55e' : 'linear-gradient(90deg,#7c3aed,#22d3ee)' }}
+              style={{ width: `${Math.round(progressValue * 100)}%`, background: progressValue === 1 ? '#22c55e' : 'linear-gradient(90deg,#7c3aed,#22d3ee)' }}
             >
-              <span className="text-xs font-bold text-white w-full text-center" style={{textShadow:'0 1px 2px #000'}}>{Math.round(progress * 100)}%</span>
+              <span className="text-xs font-bold text-white w-full text-center" style={{textShadow:'0 1px 2px #000'}}>{Math.round(progressValue * 100)}%</span>
             </div>
           </div>
           <div className="bg-white rounded-xl shadow p-6 mb-6" style={{maxHeight: '60vh', overflowY: 'auto'}} onScroll={handleScroll}>
@@ -286,29 +336,45 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
               </ul>
             )}
           </div>
-          {/* Botão para quiz aparece só com progresso 100% */}
-          {quizStage === 'reading' && progress === 1 && (
-            <button className="btn-primary w-full" onClick={() => setQuizStage('quiz')}>Concluir e fazer Quiz</button>
+          {/* Botão para quiz aparece só com progresso 100% e não concluído */}
+          {quizStage === 'reading' && progress === 1 && !isChapterComplete(selectedBook, selectedChapter) && !isBlocked && (
+            <button className="btn-primary w-full" onClick={() => setQuizModalOpen(true)}>Concluir e fazer Quiz</button>
           )}
-          {/* Quiz do capítulo */}
-          {quizStage === 'quiz' && (
-            <div className="bg-white rounded-xl shadow p-6 mt-6">
-              <h2 className="text-lg font-bold mb-2">Quiz do capítulo</h2>
-              <ChapterQuiz
-                bookId={selectedBook}
-                chapterNumber={selectedChapter}
-                questions={generateQuizQuestions(selectedBook, selectedChapter)}
-                onComplete={(passed: boolean, score: number) => {
-                  setQuizScore(score);
-                  if (passed && score >= 65) {
-                    markChapterComplete(selectedBook, selectedChapter!);
-                    setQuizStage('done');
-                  }
-                }}
-              />
-              {quizScore > 0 && quizScore < 65 && (
-                <div className="text-red-600 mt-2">Você precisa de pelo menos 65% para avançar!</div>
+          {/* Bloqueio de quiz por tempo */}
+          {isBlocked && (
+            <div className="bg-red-100 border border-red-300 text-red-700 rounded-lg p-4 mt-4 text-center">
+              Você reprovou! Só poderá tentar novamente em 30 minutos.<br />
+              {consumables > 0 && (
+                <button className="btn-primary mt-2" onClick={() => useConsumable(selectedBook, selectedChapter)}>Usar consumível para tentar agora ({consumables} disponíveis)</button>
               )}
+            </div>
+          )}
+          {/* Modal do quiz */}
+          {quizModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+              <div className="bg-white rounded-xl shadow-lg p-8 max-w-lg w-full relative">
+                <button className="absolute top-2 right-2 text-gray-500" onClick={() => setQuizModalOpen(false)}>✖</button>
+                <h2 className="text-lg font-bold mb-2">Quiz do capítulo</h2>
+                <ChapterQuiz
+                  bookId={selectedBook}
+                  chapterNumber={selectedChapter}
+                  questions={generateQuizQuestions(selectedBook, selectedChapter)}
+                  onComplete={(passed: boolean, score: number) => {
+                    setQuizScore(score);
+                    setQuizModalOpen(false);
+                    if (passed && score >= 65) {
+                      markChapterComplete(selectedBook, selectedChapter!);
+                      setQuizStage('done');
+                      setChapterJustCompleted(selectedChapter);
+                    } else {
+                      blockQuizRetry(selectedBook, selectedChapter!);
+                    }
+                  }}
+                />
+                {quizScore > 0 && quizScore < 65 && (
+                  <div className="text-red-600 mt-2">Você precisa de pelo menos 65% para avançar!</div>
+                )}
+              </div>
             </div>
           )}
           {/* Finalização */}
