@@ -1,4 +1,31 @@
-﻿import React, { useState } from 'react';
+﻿// Componente para mostrar bloqueio e cronômetro regressivo
+function BlockedRetry({ until, onUseConsumable, consumables }: { until: number; onUseConsumable: () => void; consumables: number }) {
+  const [timeLeft, setTimeLeft] = React.useState<number>(until - Date.now());
+  React.useEffect(() => {
+    if (timeLeft <= 0) return;
+    const interval = setInterval(() => {
+      setTimeLeft(until - Date.now());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [until, timeLeft]);
+  if (timeLeft <= 0) return null;
+  let min = Math.floor(timeLeft / 60000);
+  let sec = Math.floor((timeLeft % 60000) / 1000);
+  if (sec < 0) sec = 0;
+  if (min < 0) min = 0;
+  const minStr = min.toString().padStart(2, '0');
+  const secStr = sec.toString().padStart(2, '0');
+  return (
+    <div className="bg-red-100 border border-red-300 text-red-700 rounded-lg p-4 mt-4 text-center">
+      <strong>Quiz bloqueado!</strong><br />
+      Só poderá tentar novamente em <span className="font-bold">{minStr}:{secStr}</span>.<br />
+      {consumables > 0 && (
+        <button className="btn-primary mt-2" onClick={onUseConsumable}>Usar consumível para tentar agora ({consumables} disponíveis)</button>
+      )}
+    </div>
+  );
+}
+import React, { useState } from 'react';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { ALL_BIBLE_BOOKS } from '../data/bibleBooks';
 import { fetchChapter } from '../services/bibleApi';
@@ -335,18 +362,19 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
               </ul>
             )}
           </div>
-          {/* Botão para quiz aparece só com progresso 100% e não concluído */}
-          {quizStage === 'reading' && progress === 1 && !isChapterComplete(selectedBook, selectedChapter) && !isBlocked && (
-            <button className="btn-primary w-full" onClick={() => setQuizModalOpen(true)}>Concluir e fazer Quiz</button>
+          {/* Botão para quiz aparece sempre com progresso 100% */}
+          {quizStage === 'reading' && progress === 1 && !isBlocked && (
+            <button className="btn-primary w-full" onClick={() => setQuizModalOpen(true)}>
+              {isChapterComplete(selectedBook, selectedChapter) ? 'Exercício Extra (ganhe pontos)' : 'Concluir e fazer Quiz'}
+            </button>
           )}
           {/* Bloqueio de quiz por tempo */}
-          {isBlocked && (
-            <div className="bg-red-100 border border-red-300 text-red-700 rounded-lg p-4 mt-4 text-center">
-              Você reprovou! Só poderá tentar novamente em 30 minutos.<br />
-              {consumables > 0 && (
-                <button className="btn-primary mt-2" onClick={() => useConsumable(selectedBook, selectedChapter)}>Usar consumível para tentar agora ({consumables} disponíveis)</button>
-              )}
-            </div>
+          {isBlocked && !isChapterComplete(selectedBook, selectedChapter) && (
+            <BlockedRetry
+              until={quizBlockedUntil[`${selectedBook}_${selectedChapter}`]}
+              onUseConsumable={() => useConsumable(selectedBook!, selectedChapter!)}
+              consumables={consumables}
+            />
           )}
           {/* Modal do quiz */}
           {quizModalOpen && (
@@ -355,19 +383,34 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
                 <button className="absolute top-2 right-2 text-gray-500" onClick={() => setQuizModalOpen(false)}>✖</button>
                 <h2 className="text-lg font-bold mb-2">Quiz do capítulo</h2>
                 <ChapterQuiz
-                  bookId={selectedBook}
                   chapterNumber={selectedChapter}
                   questions={generateQuizQuestions(selectedBook, selectedChapter)}
                   onComplete={(passed: boolean, score: number) => {
                     setQuizScore(score);
                     setQuizModalOpen(false);
-                    if (passed) {
-                      markChapterComplete(selectedBook, selectedChapter!);
+                    if (isChapterComplete(selectedBook, selectedChapter)) {
+                      // Exercício extra: ganha ou perde pontos
+                      if (passed) {
+                        alert('Parabéns! Você ganhou pontos de sabedoria e espada.');
+                        // Aqui você pode implementar a lógica de pontuação
+                      } else {
+                        alert('Você perdeu pontos de sabedoria e espada.');
+                        // Aqui você pode implementar a lógica de penalidade
+                      }
                       setQuizStage('done');
-                      setChapterJustCompleted(selectedChapter);
                     } else {
-                      blockQuizRetry(selectedBook, selectedChapter!);
+                      if (passed) {
+                        markChapterComplete(selectedBook, selectedChapter!);
+                        setQuizStage('done');
+                        setChapterJustCompleted(selectedChapter);
+                      } else {
+                        blockQuizRetry(selectedBook, selectedChapter!);
+                      }
                     }
+                  }}
+                  onCancel={() => {
+                    setQuizModalOpen(false);
+                    blockQuizRetry(selectedBook!, selectedChapter!);
                   }}
                 />
                 {quizScore > 0 && quizScore < 65 && (

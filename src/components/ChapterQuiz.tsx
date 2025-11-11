@@ -8,19 +8,18 @@ export interface QuizQuestion {
   correctIndex: number;
 }
 
-interface ChapterQuizProps {
-  bookName: string;
-  chapterNumber: number;
-  questions: QuizQuestion[];
-  onComplete: (passed: boolean, score: number) => void;
-  onBack: () => void;
-}
+  export interface ChapterQuizProps {
+    chapterNumber: number;
+    questions: QuizQuestion[];
+    onComplete: (passed: boolean, score: number) => void;
+    onCancel?: () => void;
+  }
 
 export const ChapterQuiz: React.FC<ChapterQuizProps> = ({
-  bookName,
   chapterNumber,
   questions,
-  onComplete
+  onComplete,
+  onCancel
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -60,122 +59,120 @@ export const ChapterQuiz: React.FC<ChapterQuizProps> = ({
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-spiritual/5 to-gray-50 pb-20">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-wisdom to-wisdom/80 text-white p-4 sticky top-0 z-10 shadow-lg">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <h1 className="text-xl font-bold">Quiz - {bookName}</h1>
-              <p className="text-sm text-white/80">Capítulo {chapterNumber}</p>
-            </div>
-            <div className="text-right">
-              <p className="text-2xl font-bold">{score}/{questions.length}</p>
-              <p className="text-xs text-white/80">Pontuação</p>
-            </div>
+    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 animate-fadeIn">
+      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full relative border border-gray-200">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-xl font-bold text-spiritual">Quiz do Capítulo</h1>
+            <p className="text-sm text-gray-500">Capítulo {chapterNumber}</p>
           </div>
-          {/* Barra de progresso */}
-          <div className="w-full bg-white/20 rounded-full h-2 overflow-hidden">
-            <div 
-              className="h-full bg-white transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
+          <div className="text-right">
+            <p className="text-2xl font-bold text-victory">{score}/{questions.length}</p>
+            <p className="text-xs text-gray-400">Pontuação</p>
           </div>
         </div>
-      </div>
-
-      <div className="max-w-4xl mx-auto p-6">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          {/* Número da pergunta */}
-          <div className="flex items-center justify-between mb-6">
-            <span className="text-sm font-medium text-gray-500">
-              Pergunta {currentQuestion + 1} de {questions.length}
-            </span>
-            {showResult && (
-              <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${
-                selectedAnswer === question.correctIndex
-                  ? 'bg-victory/20 text-victory'
-                  : 'bg-red-100 text-red-600'
-              }`}>
-                {selectedAnswer === question.correctIndex ? (
-                  <>
-                    <Check size={16} />
-                    <span className="text-sm font-medium">Correto!</span>
-                  </>
-                ) : (
-                  <>
-                    <X size={16} />
-                    <span className="text-sm font-medium">Incorreto</span>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* Pergunta */}
-          <h2 className="text-2xl font-bold text-gray-800 mb-8">
-            {question.question}
-          </h2>
-
-          {/* Opções */}
-          <div className="space-y-3">
-            {question.options.map((option, index) => {
-              const isSelected = selectedAnswer === index;
-              const isCorrect = index === question.correctIndex;
-              const showCorrect = showResult && isCorrect;
-              const showWrong = showResult && isSelected && !isCorrect;
-
-              return (
-                <button
-                  key={index}
-                  onClick={() => handleAnswer(index)}
-                  disabled={selectedAnswer !== null}
-                  className={`w-full p-4 rounded-xl text-left transition-all transform hover:scale-[1.02] ${
-                    showCorrect
-                      ? 'bg-victory text-white border-2 border-victory'
-                      : showWrong
-                      ? 'bg-red-500 text-white border-2 border-red-500'
-                      : isSelected
-                      ? 'bg-spiritual/10 border-2 border-spiritual'
-                      : 'bg-gray-50 border-2 border-gray-200 hover:border-spiritual'
-                  } ${selectedAnswer !== null ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
-                      showCorrect || showWrong
-                        ? 'bg-white/20 text-white'
-                        : isSelected
-                        ? 'bg-spiritual text-white'
-                        : 'bg-white text-gray-600'
-                    }`}>
-                      {showCorrect ? (
-                        <Check size={20} />
-                      ) : showWrong ? (
-                        <X size={20} />
-                      ) : (
-                        String.fromCharCode(65 + index)
-                      )}
-                    </div>
-                    <span className={`flex-1 ${
-                      showCorrect || showWrong ? 'font-medium' : ''
-                    }`}>
-                      {option}
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Dica */}
-          {!showResult && (
-            <div className="mt-6 flex items-start gap-2 p-4 bg-blue-50 rounded-lg">
-              <AlertCircle size={20} className="text-blue-600 flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-blue-800">
-                Selecione a resposta correta. Você precisa de 70% de acerto para passar!
-              </p>
+        {/* Barra de progresso */}
+        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden mb-8">
+          <div 
+            className="h-full bg-gradient-to-r from-spiritual to-victory transition-all duration-300"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        {/* Número da pergunta */}
+        <div className="flex items-center justify-between mb-6">
+          <span className="text-sm font-medium text-gray-500">
+            Pergunta {currentQuestion + 1} de {questions.length}
+          </span>
+          {showResult && (
+            <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${
+              selectedAnswer === question.correctIndex
+                ? 'bg-victory/20 text-victory'
+                : 'bg-red-100 text-red-600'
+            }`}>
+              {selectedAnswer === question.correctIndex ? (
+                <>
+                  <Check size={16} />
+                  <span className="text-sm font-medium">Correto!</span>
+                </>
+              ) : (
+                <>
+                  <X size={16} />
+                  <span className="text-sm font-medium">Incorreto</span>
+                </>
+              )}
             </div>
           )}
+        </div>
+        {/* Pergunta */}
+        <h2 className="text-2xl font-bold text-gray-800 mb-8">
+          {question.question}
+        </h2>
+        {/* Opções */}
+        <div className="space-y-3">
+          {question.options.map((option, index) => {
+            const isSelected = selectedAnswer === index;
+            const isCorrect = index === question.correctIndex;
+            const showCorrect = showResult && isCorrect;
+            const showWrong = showResult && isSelected && !isCorrect;
+            return (
+              <button
+                key={index}
+                onClick={() => handleAnswer(index)}
+                disabled={selectedAnswer !== null}
+                className={`w-full p-4 rounded-xl text-left transition-all transform hover:scale-[1.02] ${
+                  showCorrect
+                    ? 'bg-victory text-white border-2 border-victory'
+                    : showWrong
+                    ? 'bg-red-500 text-white border-2 border-red-500'
+                    : isSelected
+                    ? 'bg-spiritual/10 border-2 border-spiritual'
+                    : 'bg-gray-50 border-2 border-gray-200 hover:border-spiritual'
+                } ${selectedAnswer !== null ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                    showCorrect || showWrong
+                      ? 'bg-white/20 text-white'
+                      : isSelected
+                      ? 'bg-spiritual text-white'
+                      : 'bg-white text-gray-600'
+                  }`}>
+                    {showCorrect ? (
+                      <Check size={20} />
+                    ) : showWrong ? (
+                      <X size={20} />
+                    ) : (
+                      String.fromCharCode(65 + index)
+                    )}
+                  </div>
+                  <span className={`flex-1 ${
+                    showCorrect || showWrong ? 'font-medium' : ''
+                  }`}>
+                    {option}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        {/* Dica */}
+        {!showResult && (
+          <div className="mt-6 flex items-start gap-2 p-4 bg-blue-50 rounded-lg">
+            <AlertCircle size={20} className="text-blue-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-blue-800">
+              Selecione a resposta correta. Você precisa de 70% de acerto para passar!
+            </p>
+          </div>
+        )}
+        {/* Botão Cancelar */}
+        <div className="flex justify-end mt-8">
+          <button
+            className="px-5 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition"
+            onClick={() => {
+              if (onCancel) onCancel();
+            }}
+          >Cancelar</button>
         </div>
       </div>
     </div>
