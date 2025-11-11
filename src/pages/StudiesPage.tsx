@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, BookOpen, Play, Lock, Check, Star, Trophy, Target, Clock, AlertCircle } from 'lucide-react';
+import { ArrowLeft, BookOpen, Play, Lock, Check, Star, Trophy, Target, Clock } from 'lucide-react';
 import { studyBooks, StudyBook, StudyChapter, getCurrentStudyData, StudyProgress } from '../data/studies';
 import { quizQuestions } from '../data/missions';
 import { inventoryManager } from '../utils/inventoryManager';

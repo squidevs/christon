@@ -23,19 +23,6 @@ function App() {
     return safeLocalStorage.getItem('christon-avatar-background') || 'spiritual1';
   });
 
-  const [playerStatus, setPlayerStatus] = useState<'solteiro' | 'casado'>(() => {
-    try {
-      const savedProfile = safeLocalStorage.getItem('christon-profile');
-      if (savedProfile) {
-        const profile = JSON.parse(savedProfile);
-        return profile.status || 'solteiro';
-      }
-    } catch (error) {
-      console.warn('Failed to load player status:', error);
-    }
-    return 'solteiro';
-  });
-
   // Função para atualizar o avatar globalmente
   const updatePlayerAvatar = (newAvatar: string) => {
     setPlayerAvatar(newAvatar);
@@ -50,7 +37,16 @@ function App() {
 
   // Função para atualizar o status civil
   const updatePlayerStatus = (newStatus: 'solteiro' | 'casado') => {
-    setPlayerStatus(newStatus);
+    try {
+      const savedProfile = safeLocalStorage.getItem('christon-profile');
+      if (savedProfile) {
+        const profile = JSON.parse(savedProfile);
+        profile.status = newStatus;
+        safeLocalStorage.setItem('christon-profile', JSON.stringify(profile));
+      }
+    } catch (error) {
+      console.warn('Failed to update player status:', error);
+    }
   };
 
   // Função para gerar avatar padrão
