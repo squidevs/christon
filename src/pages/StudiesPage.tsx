@@ -141,11 +141,11 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
               Equipe <span className="font-bold">Espada do Espírito</span> e tenha uma <span className="font-bold">Bíblia Sagrada</span> no inventário para liberar os estudos.
             </div>
           )}
-          <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${!canStudy ? 'pointer-events-none opacity-60' : ''}`}>
+          <div className={`grid grid-cols-2 gap-4 ${!canStudy ? 'pointer-events-none opacity-60' : ''}`}>
             {/* Coluna Antigo Testamento */}
-            <div>
-              <h2 className="text-lg font-bold mb-4 text-spiritual">Antigo Testamento</h2>
-              <div className="grid grid-cols-2 gap-4">
+              <div>
+                <h2 className="text-lg font-bold mb-4 text-spiritual">Antigo Testamento</h2>
+                  <div className="flex flex-col gap-4">
                 {oldBooks.map((book: any) => {
                   const progress = getBookProgress(book.id, book.chapters);
                   return (
@@ -165,13 +165,12 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
                         <span className="font-bold text-gray-800 text-center z-0">{book.name}</span>
                         <span className="text-xs text-gray-500 z-0">{book.chapters} capítulos</span>
                       </div>
-                      <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden mt-4 flex items-center justify-center absolute left-0 bottom-0">
+                      <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden mt-4 absolute left-0 bottom-0">
                         <div
-                          className="h-full rounded-full transition-all duration-700 flex items-center justify-center"
+                          className="h-full rounded-full transition-all duration-700"
                           style={{ width: `${Math.round(progress * 100)}%`, background: progress === 1 ? '#22c55e' : 'linear-gradient(90deg,#7c3aed,#22d3ee)' }}
-                        >
-                          <span className="text-xs font-bold text-white w-full text-center" style={{textShadow:'0 1px 2px #000'}}>{Math.round(progress * 100)}%</span>
-                        </div>
+                        ></div>
+                        <span className="text-xs font-bold text-white w-full text-center absolute left-0 top-0" style={{textShadow:'0 1px 2px #000'}}>{Math.round(progress * 100)}%</span>
                       </div>
                       {!canStudy && (
                         <div className="absolute inset-0 flex items-center justify-center z-20">
@@ -184,9 +183,9 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
               </div>
             </div>
             {/* Coluna Novo Testamento */}
-            <div>
-              <h2 className="text-lg font-bold mb-4 text-victory">Novo Testamento</h2>
-              <div className="grid grid-cols-2 gap-4">
+              <div>
+                <h2 className="text-lg font-bold mb-4 text-victory">Novo Testamento</h2>
+                  <div className="flex flex-col gap-4">
                 {newBooks.map((book: any) => {
                   const progress = getBookProgress(book.id, book.chapters);
                   return (
@@ -362,7 +361,7 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
                   onComplete={(passed: boolean, score: number) => {
                     setQuizScore(score);
                     setQuizModalOpen(false);
-                    if (passed && score >= 65) {
+                    if (passed) {
                       markChapterComplete(selectedBook, selectedChapter!);
                       setQuizStage('done');
                       setChapterJustCompleted(selectedChapter);
