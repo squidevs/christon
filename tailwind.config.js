@@ -17,7 +17,7 @@ export default {
         neutral: '#CFCFCF'
       },
       fontFamily: {
-        display: ['Playfair Display', 'serif'],
+        display: ['Inter', 'sans-serif'],
         sans: ['Inter', 'sans-serif']
       }
     },

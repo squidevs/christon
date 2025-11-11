@@ -9,12 +9,17 @@ import EnhancedMissionsPage from './pages/EnhancedMissionsPage';
 import ProfilePage from './pages/ProfilePage';
 import AchievementsPage from './pages/AchievementsPage';
 import StudiesPage from './pages/StudiesPage';
+import AboutPage from './pages/AboutPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsOfServicePage from './pages/TermsOfServicePage';
+import TutorialPage from './pages/TutorialPage';
+import { inventoryManager } from './utils/inventoryManager';
 
 // Import dos dados JSON (simulação)
 import playerData from './data/player.json';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('inicio');
+  const [activeTab, setActiveTab] = useState('missoes');
   const [playerAvatar, setPlayerAvatar] = useState<string>(() => {
     return safeLocalStorage.getItem('christon-avatar') || '';
   });
@@ -22,6 +27,34 @@ function App() {
   const [avatarBackground, setAvatarBackground] = useState<string>(() => {
     return safeLocalStorage.getItem('christon-avatar-background') || 'spiritual1';
   });
+
+  const [armorPieces, setArmorPieces] = useState(() => inventoryManager.getArmorForHUD());
+  const [playerSin, setPlayerSin] = useState(0);
+
+  // Carregar pecado e stats do jogador
+  useEffect(() => {
+    try {
+      let profile = safeLocalStorage.getItem('christon-profile');
+      
+      // Se não existe perfil, criar um
+      if (!profile) {
+        console.log('📝 Criando perfil inicial...');
+        const initialProfile = {
+          ...playerData,
+          sin: playerData.sin || 0
+        };
+        safeLocalStorage.setItem('christon-profile', JSON.stringify(initialProfile));
+        setPlayerSin(initialProfile.sin);
+      } else {
+        const data = JSON.parse(profile);
+        console.log('👤 Pecado carregado do perfil:', data.sin);
+        setPlayerSin(data.sin || 0);
+      }
+    } catch (error) {
+      console.error('❌ Erro ao carregar dados:', error);
+      setPlayerSin(playerData.sin || 0);
+    }
+  }, [activeTab]);
 
   // Função para atualizar o avatar globalmente
   const updatePlayerAvatar = (newAvatar: string) => {
@@ -75,16 +108,15 @@ function App() {
     }
   }, [playerAvatar]);
 
+  // Atualizar armadura quando mudar de tab
+  useEffect(() => {
+    setArmorPieces(inventoryManager.getArmorForHUD());
+  }, [activeTab]);
+
   const renderContent = () => {
     switch (activeTab) {
-      case 'inicio':
-        return <ActionsPage />;
       case 'missoes':
         return <EnhancedMissionsPage />;
-      case 'estudos':
-        return <StudiesPage onBack={() => setActiveTab('inicio')} />;
-      case 'conquistas':
-        return <AchievementsPage onBack={() => setActiveTab('inicio')} />;
       case 'inventario':
         return <ItemsPage />;
       case 'perfil':
@@ -93,8 +125,22 @@ function App() {
           onStatusUpdate={updatePlayerStatus}
           onBackgroundUpdate={updateAvatarBackground}
         />;
-      default:
+      case 'estudos':
+        return <StudiesPage onBack={() => setActiveTab('missoes')} />;
+      case 'conquistas':
+        return <AchievementsPage onBack={() => setActiveTab('missoes')} />;
+      case 'about':
+        return <AboutPage />;
+      case 'privacy':
+        return <PrivacyPolicyPage />;
+      case 'terms':
+        return <TermsOfServicePage />;
+      case 'tutorial':
+        return <TutorialPage />;
+      case 'inicio':
         return <ActionsPage />;
+      default:
+        return <EnhancedMissionsPage />;
     }
   };
 
@@ -107,15 +153,18 @@ function App() {
         streak={playerData.streak}
         avatarUrl={playerAvatar}
         avatarBackground={avatarBackground}
+        sin={playerSin}
         onNavigate={setActiveTab}
       />
       
-      <div className="flex-1 overflow-y-auto pb-20">
-        {activeTab === 'inicio' && (
-          <div className="p-4 mb-4">
-            <ArmorHUD armorPieces={playerData.armorPieces} />
-          </div>
-        )}
+      {/* Armadura de Deus - Sticky abaixo do header */}
+      <div className="sticky top-[138px] sm:top-[164px] z-40 bg-primary shadow-md">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2">
+          <ArmorHUD armorPieces={armorPieces} />
+        </div>
+      </div>
+      
+      <div className="">
         {renderContent()}
       </div>
       

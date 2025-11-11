@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeft, BookOpen, Play, Lock, Check, Star, Trophy, Target, Clock } from 'lucide-react';
 import { studyBooks, StudyBook, StudyChapter, getCurrentStudyData, StudyProgress } from '../data/studies';
 import { quizQuestions } from '../data/missions';
-import { inventoryManager } from '../utils/inventoryManager';
 
 interface StudiesPageProps {
   onBack: () => void;
@@ -31,12 +30,7 @@ const StudiesPage: React.FC<StudiesPageProps> = ({ onBack }) => {
   const [chapterQuiz, setChapterQuiz] = useState<ChapterQuizState | null>(null);
   const [finalQuiz, setFinalQuiz] = useState<FinalQuizState | null>(null);
   const [studyProgress, setStudyProgress] = useState<StudyProgress>(getCurrentStudyData());
-  const [hasBible, setHasBible] = useState(false);
-
-  // Verificar se tem Bíblia equipada
-  useEffect(() => {
-    setHasBible(inventoryManager.hasBible());
-  }, []);
+  const [hasBible] = useState(true); // Sempre permitir acesso aos estudos
 
   // Se não tem Bíblia, mostrar tela de bloqueio
   if (!hasBible) {
@@ -585,38 +579,38 @@ const StudiesPage: React.FC<StudiesPageProps> = ({ onBack }) => {
 
   // Renderizar lista principal de livros
   return (
-    <div className="p-4 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center mb-4">
+    <div className="bg-gray-50 min-h-screen">
+      {/* Header Sticky - abaixo do header e armadura */}
+      <div className="sticky top-[218px] sm:top-[264px] z-30 bg-gray-50 pb-3 px-4">
+        <div className="flex items-center mb-2 pt-2">
           <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-lg mr-3">
             <ArrowLeft size={20} />
           </button>
           <div>
-            <h2 className="text-2xl font-bold text-spiritual">Estudos Bíblicos</h2>
-            <p className="text-gray-600">Jornada progressiva através das Escrituras</p>
+            <h2 className="text-base sm:text-xl font-bold text-spiritual">Estudos Bíblicos</h2>
+            <p className="text-[10px] sm:text-xs text-gray-600">Jornada progressiva através das Escrituras</p>
           </div>
         </div>
         
-        {/* Estatísticas gerais */}
-        <div className="grid grid-cols-3 gap-4">
-          <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-            <div className="text-2xl font-bold text-spiritual">{studyProgress.completedBooks.length}</div>
-            <div className="text-sm text-gray-600">Livros Completos</div>
+        {/* Estatísticas gerais compactas */}
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+          <div className="bg-white rounded-lg p-1.5 sm:p-2 text-center shadow-sm">
+            <div className="text-sm sm:text-lg font-bold text-spiritual">{studyProgress.completedBooks.length}</div>
+            <div className="text-[9px] sm:text-[10px] text-gray-600">Livros</div>
           </div>
-          <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-            <div className="text-2xl font-bold text-wisdom">{studyProgress.completedChapters.length}</div>
-            <div className="text-sm text-gray-600">Capítulos</div>
+          <div className="bg-white rounded-lg p-1.5 sm:p-2 text-center shadow-sm">
+            <div className="text-sm sm:text-lg font-bold text-wisdom">{studyProgress.completedChapters.length}</div>
+            <div className="text-[9px] sm:text-[10px] text-gray-600">Capítulos</div>
           </div>
-          <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-            <div className="text-2xl font-bold text-victory">{studyProgress.totalWisdom}</div>
-            <div className="text-sm text-gray-600">Sabedoria</div>
+          <div className="bg-white rounded-lg p-1.5 sm:p-2 text-center shadow-sm">
+            <div className="text-sm sm:text-lg font-bold text-victory">{studyProgress.totalWisdom}</div>
+            <div className="text-[9px] sm:text-[10px] text-gray-600">Sabedoria</div>
           </div>
         </div>
       </div>
 
       {/* Lista de livros */}
-      <div className="space-y-4">
+      <div className="space-y-4 px-4 pb-4">
         {studyBooks.map((book, index) => {
           const isUnlocked = book.isUnlocked;
           const isCompleted = studyProgress.completedBooks.includes(book.id);

@@ -145,10 +145,13 @@ export const missionsManager = {
 
   // Completar missão e aplicar recompensas
   completeMission(missionId: number, mission: Mission): void {
+    console.log(`🎯 Completando missão ${missionId}:`, mission.titulo);
     this.updateMissionStatus(missionId, 'concluida');
     
     // Aplicar recompensas ao jogador
     this.applyRewards(mission);
+    
+    console.log(`✅ Missão ${missionId} concluída e recompensas aplicadas!`);
   },
 
   // Desistir de missão e aplicar penalidades
@@ -162,10 +165,24 @@ export const missionsManager = {
   // Aplicar recompensas (integrar com sistema do jogador)
   applyRewards(mission: Mission): void {
     try {
-      const profile = safeLocalStorage.getItem('christon-profile');
-      if (!profile) return;
-
-      const playerData = JSON.parse(profile);
+      let profile = safeLocalStorage.getItem('christon-profile');
+      let playerData;
+      
+      // Se não existir perfil, criar um básico
+      if (!profile) {
+        console.warn('⚠️ Perfil não encontrado, criando perfil básico...');
+        playerData = {
+          id: 'player_001',
+          name: 'Jogador',
+          wisdom: 0,
+          sin: 0,
+          spiritLevel: 1,
+          status: 'solteiro',
+          streak: 0
+        };
+      } else {
+        playerData = JSON.parse(profile);
+      }
       
       // Adicionar XP de sabedoria
       playerData.wisdom = (playerData.wisdom || 0) + mission.recompensas.xpSabedoria;
@@ -176,17 +193,45 @@ export const missionsManager = {
       }
 
       safeLocalStorage.setItem('christon-profile', JSON.stringify(playerData));
+      console.log(`💰 Recompensas aplicadas: +${mission.recompensas.xpSabedoria} Sabedoria, +${mission.recompensas.moedasFe} Fé`);
       
-      // Adicionar consumíveis/equipamentos ao inventário
-      if (mission.recompensas.consumiveis.length > 0) {
-        mission.recompensas.consumiveis.forEach(consumivel => {
-          for (let i = 0; i < consumivel.quantidade; i++) {
-            inventoryManager.addItem(consumivel.tipo);
-          }
-        });
+      // Mapear missões de armadura para adicionar peças ao inventário
+      const armorMissionMap: { [key: number]: { piece: 'cinturao' | 'couraca' | 'sandalias' | 'escudo' | 'capacete' | 'espada', points: number } } = {
+        101: { piece: 'cinturao', points: 20 },
+        102: { piece: 'couraca', points: 20 },
+        103: { piece: 'sandalias', points: 20 },
+        104: { piece: 'escudo', points: 20 },
+        105: { piece: 'capacete', points: 20 },
+        106: { piece: 'espada', points: 20 }
+      };
+
+      // Se for missão de armadura, adicionar a peça e pontos de integridade
+      if (mission.id in armorMissionMap) {
+        const armorData = armorMissionMap[mission.id];
+        const inventory = inventoryManager.loadInventory();
+        
+        // Marcar peça como obtida
+        inventory.armor[armorData.piece].obtained = true;
+        // Adicionar integridade inicial
+        inventory.armor[armorData.piece].integrity = armorData.points;
+        
+        inventoryManager.saveInventory(inventory);
+        
+        console.log(`✅ Armadura adicionada: ${armorData.piece} com ${armorData.points} pontos`);
+      } else {
+        // Adicionar consumíveis/equipamentos ao inventário (outras missões)
+        if (mission.recompensas.consumiveis.length > 0) {
+          console.log(`📦 Adicionando ${mission.recompensas.consumiveis.length} consumível(is)`);
+          mission.recompensas.consumiveis.forEach(consumivel => {
+            console.log(`  → ${consumivel.quantidade}x ${consumivel.tipo}`);
+            for (let i = 0; i < consumivel.quantidade; i++) {
+              inventoryManager.addItem(consumivel.tipo);
+            }
+          });
+        }
       }
     } catch (error) {
-      console.error('Erro ao aplicar recompensas:', error);
+      console.error('❌ Erro ao aplicar recompensas:', error);
     }
   },
 

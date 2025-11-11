@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Target, Package, Trophy, BookOpen } from 'lucide-react';
+import { Target, Package, User, BookOpen, Trophy } from 'lucide-react';
 
 interface BottomNavigationProps {
   activeTab: string;
@@ -8,16 +8,16 @@ interface BottomNavigationProps {
 
 const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabChange }) => {
   const tabs = [
-    { id: 'inicio', name: 'Início', icon: Home },
     { id: 'missoes', name: 'Missões', icon: Target },
+    { id: 'inventario', name: 'Inventário', icon: Package },
+    { id: 'perfil', name: 'Perfil', icon: User },
     { id: 'estudos', name: 'Estudos', icon: BookOpen },
-    { id: 'conquistas', name: 'Conquistas', icon: Trophy },
-    { id: 'inventario', name: 'Inventário', icon: Package }
+    { id: 'conquistas', name: 'Conquistas', icon: Trophy }
   ];
 
   return (
-    <nav className="bg-white border-t border-gray-200 px-4 py-2">
-      <div className="flex justify-around">
+    <nav className="bg-white border-t border-gray-200 px-2 sm:px-4 py-2 safe-area-bottom z-[100]">
+      <div className="flex justify-around max-w-md mx-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -26,14 +26,14 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
+              className={`flex flex-col items-center p-2 rounded-lg transition-colors min-w-[60px] ${
                 isActive 
                   ? 'text-spiritual bg-spiritual/10' 
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              <Icon size={20} />
-              <span className="text-xs mt-1">{tab.name}</span>
+              <Icon size={20} className="sm:w-6 sm:h-6" />
+              <span className="text-xs mt-1 truncate w-full text-center">{tab.name}</span>
             </button>
           );
         })}

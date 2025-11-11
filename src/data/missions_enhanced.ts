@@ -9,10 +9,10 @@ export const missions: Mission[] = [
   // MISSÕES DA ARMADURA DE DEUS - INICIAIS
   {
     id: 101,
-    categoria: 'acao',
-    tags: ['verdade', 'honestidade', 'armadura'],
+    categoria: 'quiz',
+    tags: ['verdade', 'honestidade', 'armadura', 'efesios'],
     titulo: 'Cinturão da Verdade',
-    descricao: 'Fale apenas a verdade hoje. Não minta, não exagere, não omita. "Portanto, cada um de vocês deve abandonar a mentira e falar a verdade ao seu próximo." - Efésios 4:25',
+    descricao: 'Estude Efésios 6:14a - "Estejam firmes, cingindo-se com o cinturão da verdade". Complete o quiz sobre a importância da verdade na vida cristã.',
     tipoMissao: 'diaria',
     nivelDificuldade: 'comum',
     tempoRestante: '24h',
@@ -33,15 +33,19 @@ export const missions: Mission[] = [
       botoes: {
         iniciar: true,
         desistir: true,
-        concluir: true
+        concluir: false
       },
       progresso: {
         porcentagem: 0,
         checkboxes: []
       },
       quiz: {
-        ativo: false,
-        perguntas: [],
+        ativo: true,
+        perguntas: [
+          'O que o cinturão da verdade representa?',
+          'Por que a verdade é fundamental na armadura de Deus?',
+          'Como praticamos a verdade no dia a dia?'
+        ],
         respostas: [],
         corretas: []
       }
@@ -62,15 +66,49 @@ export const missions: Mission[] = [
       ]
     },
     penalidades: {
-      descricao: '+2 Pecado por mentir.',
+      descricao: '+2 Pecado por desistir.',
       efeitos: {
         pecado: 2,
         perdaXp: 10
       }
     },
     quizDados: {
-      ativo: false,
-      questoes: [],
+      ativo: true,
+      questoes: [
+        {
+          id: 1,
+          pergunta: 'O que o cinturão da verdade representa na armadura de Deus?',
+          opcoes: [
+            'A integridade e honestidade em tudo',
+            'Apenas não mentir',
+            'Saber todos os versículos',
+            'Ter conhecimento teológico'
+          ],
+          correta: 'A integridade e honestidade em tudo'
+        },
+        {
+          id: 2,
+          pergunta: 'Por que a verdade é a primeira peça da armadura mencionada?',
+          opcoes: [
+            'Porque sustenta todas as outras peças',
+            'Porque é a mais fácil',
+            'Porque é a menos importante',
+            'Por acaso, não tem significado especial'
+          ],
+          correta: 'Porque sustenta todas as outras peças'
+        },
+        {
+          id: 3,
+          pergunta: 'Como praticamos o cinturão da verdade?',
+          opcoes: [
+            'Sendo honestos, transparentes e íntegros',
+            'Apenas indo à igreja',
+            'Lendo a Bíblia',
+            'Orando todos os dias'
+          ],
+          correta: 'Sendo honestos, transparentes e íntegros'
+        }
+      ],
       acertos: 0,
       erros: 0
     },
@@ -84,10 +122,10 @@ export const missions: Mission[] = [
   },
   {
     id: 102,
-    categoria: 'acao',
-    tags: ['justica', 'retidao', 'armadura'],
+    categoria: 'quiz',
+    tags: ['justica', 'retidao', 'armadura', 'efesios'],
     titulo: 'Couraça da Justiça',
-    descricao: 'Pratique a justiça hoje. Seja correto em suas ações, ajude quem precisa, não se envolva em nada desonesto. "Revistam-se da couraça da justiça." - Efésios 6:14',
+    descricao: 'Estude Efésios 6:14b - "Vestindo a couraça da justiça". Aprenda sobre viver em retidão e proteção espiritual.',
     tipoMissao: 'diaria',
     nivelDificuldade: 'comum',
     tempoRestante: '24h',
@@ -108,15 +146,19 @@ export const missions: Mission[] = [
       botoes: {
         iniciar: true,
         desistir: true,
-        concluir: true
+        concluir: false
       },
       progresso: {
         porcentagem: 0,
         checkboxes: []
       },
       quiz: {
-        ativo: false,
-        perguntas: [],
+        ativo: true,
+        perguntas: [
+          'O que a couraça protegia no soldado romano?',
+          'O que significa vestir a couraça da justiça?',
+          'Qual o papel da justiça na vida cristã?'
+        ],
         respostas: [],
         corretas: []
       }
@@ -135,15 +177,49 @@ export const missions: Mission[] = [
       consumiveis: []
     },
     penalidades: {
-      descricao: '+2 Pecado por agir com injustiça.',
+      descricao: '+2 Pecado por desistir.',
       efeitos: {
         pecado: 2,
         perdaXp: 10
       }
     },
     quizDados: {
-      ativo: false,
-      questoes: [],
+      ativo: true,
+      questoes: [
+        {
+          id: 1,
+          pergunta: 'O que a couraça protegia no soldado romano?',
+          opcoes: [
+            'O coração e os órgãos vitais',
+            'Apenas o estômago',
+            'As costas',
+            'A cabeça'
+          ],
+          correta: 'O coração e os órgãos vitais'
+        },
+        {
+          id: 2,
+          pergunta: 'O que significa vestir a couraça da justiça?',
+          opcoes: [
+            'Viver em retidão, protegendo nosso coração do pecado',
+            'Julgar as outras pessoas',
+            'Ser perfeito em tudo',
+            'Seguir apenas as leis humanas'
+          ],
+          correta: 'Viver em retidão, protegendo nosso coração do pecado'
+        },
+        {
+          id: 3,
+          pergunta: 'A justiça de quem nos protege?',
+          opcoes: [
+            'A justiça de Cristo imputada a nós',
+            'Nossa própria justiça',
+            'A justiça da sociedade',
+            'A justiça dos fariseus'
+          ],
+          correta: 'A justiça de Cristo imputada a nós'
+        }
+      ],
       acertos: 0,
       erros: 0
     },
@@ -157,10 +233,10 @@ export const missions: Mission[] = [
   },
   {
     id: 103,
-    categoria: 'acao',
-    tags: ['evangelho', 'evangelismo', 'armadura'],
+    categoria: 'quiz',
+    tags: ['evangelho', 'evangelismo', 'armadura', 'efesios'],
     titulo: 'Sandálias do Evangelho',
-    descricao: 'Compartilhe o evangelho com alguém hoje. Fale de Jesus, envie uma mensagem de fé ou convide alguém para a igreja. "Calcem os pés com a prontidão do evangelho da paz." - Efésios 6:15',
+    descricao: 'Estude Efésios 6:15 - "Calçando os pés com a preparação do evangelho da paz". Aprenda sobre estar pronto para compartilhar o evangelho.',
     tipoMissao: 'diaria',
     nivelDificuldade: 'rara',
     tempoRestante: '24h',
@@ -181,15 +257,19 @@ export const missions: Mission[] = [
       botoes: {
         iniciar: true,
         desistir: true,
-        concluir: true
+        concluir: false
       },
       progresso: {
         porcentagem: 0,
         checkboxes: []
       },
       quiz: {
-        ativo: false,
-        perguntas: [],
+        ativo: true,
+        perguntas: [
+          'O que as sandálias simbolizam?',
+          'O que é o evangelho da paz?',
+          'Como devemos estar preparados?'
+        ],
         respostas: [],
         corretas: []
       }
@@ -208,15 +288,49 @@ export const missions: Mission[] = [
       consumiveis: []
     },
     penalidades: {
-      descricao: '+1 Pecado por não evangelizar.',
+      descricao: '+1 Pecado por desistir.',
       efeitos: {
         pecado: 1,
         perdaXp: 10
       }
     },
     quizDados: {
-      ativo: false,
-      questoes: [],
+      ativo: true,
+      questoes: [
+        {
+          id: 1,
+          pergunta: 'O que as sandálias do evangelho simbolizam?',
+          opcoes: [
+            'Prontidão para levar o evangelho a todos os lugares',
+            'Apenas caminhar na igreja',
+            'Ter sapatos bonitos',
+            'Viajar muito'
+          ],
+          correta: 'Prontidão para levar o evangelho a todos os lugares'
+        },
+        {
+          id: 2,
+          pergunta: 'O que significa "evangelho da paz"?',
+          opcoes: [
+            'As boas novas de reconciliação com Deus através de Cristo',
+            'Apenas não brigar com ninguém',
+            'Ser pacífico',
+            'Evitar conflitos'
+          ],
+          correta: 'As boas novas de reconciliação com Deus através de Cristo'
+        },
+        {
+          id: 3,
+          pergunta: 'Como devemos estar preparados segundo este versículo?',
+          opcoes: [
+            'Conhecendo bem o evangelho para compartilhá-lo sempre',
+            'Decorando versículos',
+            'Indo à igreja todo domingo',
+            'Tendo diploma de teologia'
+          ],
+          correta: 'Conhecendo bem o evangelho para compartilhá-lo sempre'
+        }
+      ],
       acertos: 0,
       erros: 0
     },
@@ -230,10 +344,10 @@ export const missions: Mission[] = [
   },
   {
     id: 104,
-    categoria: 'acao',
-    tags: ['fe', 'confianca', 'armadura'],
+    categoria: 'quiz',
+    tags: ['fe', 'confianca', 'armadura', 'efesios'],
     titulo: 'Escudo da Fé',
-    descricao: 'Confie em Deus em uma situação difícil hoje. Não se deixe abalar pela ansiedade ou medo. Ore e entregue suas preocupações. "Tomem o escudo da fé para apagar as setas inflamadas do maligno." - Efésios 6:16',
+    descricao: 'Estude Efésios 6:16 - "Embraçando sempre o escudo da fé, com o qual podereis apagar todos os dardos inflamados do maligno". Aprenda sobre proteção pela fé.',
     tipoMissao: 'diaria',
     nivelDificuldade: 'comum',
     tempoRestante: '24h',
@@ -254,15 +368,19 @@ export const missions: Mission[] = [
       botoes: {
         iniciar: true,
         desistir: true,
-        concluir: true
+        concluir: false
       },
       progresso: {
         porcentagem: 0,
         checkboxes: []
       },
       quiz: {
-        ativo: false,
-        perguntas: [],
+        ativo: true,
+        perguntas: [
+          'O que são os dardos inflamados?',
+          'Como o escudo da fé nos protege?',
+          'Qual a importância de "embraçar sempre"?'
+        ],
         respostas: [],
         corretas: []
       }
@@ -281,15 +399,49 @@ export const missions: Mission[] = [
       consumiveis: []
     },
     penalidades: {
-      descricao: '+1 Pecado por falta de fé.',
+      descricao: '+1 Pecado por desistir.',
       efeitos: {
         pecado: 1,
         perdaXp: 10
       }
     },
     quizDados: {
-      ativo: false,
-      questoes: [],
+      ativo: true,
+      questoes: [
+        {
+          id: 1,
+          pergunta: 'O que são os "dardos inflamados do maligno"?',
+          opcoes: [
+            'Tentações, dúvidas e ataques espirituais de Satanás',
+            'Flechas literais de fogo',
+            'Apenas pensamentos ruins',
+            'Problemas do dia a dia'
+          ],
+          correta: 'Tentações, dúvidas e ataques espirituais de Satanás'
+        },
+        {
+          id: 2,
+          pergunta: 'Como o escudo da fé nos protege?',
+          opcoes: [
+            'Nossa confiança em Deus extingue as tentações e dúvidas',
+            'Magicamente',
+            'Apenas orando',
+            'Indo à igreja'
+          ],
+          correta: 'Nossa confiança em Deus extingue as tentações e dúvidas'
+        },
+        {
+          id: 3,
+          pergunta: 'O que significa "embraçando sempre" o escudo?',
+          opcoes: [
+            'Manter a fé constantemente ativa, não apenas em crises',
+            'Carregar um escudo literal',
+            'Orar de vez em quando',
+            'Ler a Bíblia aos domingos'
+          ],
+          correta: 'Manter a fé constantemente ativa, não apenas em crises'
+        }
+      ],
       acertos: 0,
       erros: 0
     },
@@ -303,10 +455,10 @@ export const missions: Mission[] = [
   },
   {
     id: 105,
-    categoria: 'acao',
-    tags: ['salvacao', 'seguranca', 'armadura'],
+    categoria: 'quiz',
+    tags: ['salvacao', 'seguranca', 'armadura', 'efesios'],
     titulo: 'Capacete da Salvação',
-    descricao: 'Reafirme sua fé em Jesus Cristo hoje. Leia sobre a salvação, ore agradecendo por ela e compartilhe seu testemunho. "Tomem o capacete da salvação." - Efésios 6:17',
+    descricao: 'Estude Efésios 6:17a - "Tomai também o capacete da salvação". Aprenda sobre a segurança da nossa salvação em Cristo.',
     tipoMissao: 'diaria',
     nivelDificuldade: 'comum',
     tempoRestante: '24h',
@@ -327,15 +479,19 @@ export const missions: Mission[] = [
       botoes: {
         iniciar: true,
         desistir: true,
-        concluir: true
+        concluir: false
       },
       progresso: {
         porcentagem: 0,
         checkboxes: []
       },
       quiz: {
-        ativo: false,
-        perguntas: [],
+        ativo: true,
+        perguntas: [
+          'O que o capacete protegia?',
+          'O que significa ter o capacete da salvação?',
+          'Por que a salvação protege nossa mente?'
+        ],
         respostas: [],
         corretas: []
       }
@@ -354,15 +510,49 @@ export const missions: Mission[] = [
       consumiveis: []
     },
     penalidades: {
-      descricao: '+1 Pecado por negligenciar a salvação.',
+      descricao: '+1 Pecado por desistir.',
       efeitos: {
         pecado: 1,
         perdaXp: 10
       }
     },
     quizDados: {
-      ativo: false,
-      questoes: [],
+      ativo: true,
+      questoes: [
+        {
+          id: 1,
+          pergunta: 'O que o capacete protegia no soldado romano?',
+          opcoes: [
+            'A cabeça, protegendo o cérebro de golpes fatais',
+            'Apenas o rosto',
+            'O pescoço',
+            'Os ouvidos'
+          ],
+          correta: 'A cabeça, protegendo o cérebro de golpes fatais'
+        },
+        {
+          id: 2,
+          pergunta: 'O que significa ter o capacete da salvação?',
+          opcoes: [
+            'Ter certeza da nossa salvação em Cristo, protegendo nossa mente',
+            'Apenas ser batizado',
+            'Ir à igreja',
+            'Fazer boas obras'
+          ],
+          correta: 'Ter certeza da nossa salvação em Cristo, protegendo nossa mente'
+        },
+        {
+          id: 3,
+          pergunta: 'Por que a salvação é comparada a um capacete?',
+          opcoes: [
+            'Porque protege nossa mente de dúvidas e desespero',
+            'Porque é pesada',
+            'Porque brilha',
+            'Porque é cara'
+          ],
+          correta: 'Porque protege nossa mente de dúvidas e desespero'
+        }
+      ],
       acertos: 0,
       erros: 0
     },
@@ -376,10 +566,10 @@ export const missions: Mission[] = [
   },
   {
     id: 106,
-    categoria: 'acao',
-    tags: ['palavra', 'biblia', 'armadura'],
+    categoria: 'quiz',
+    tags: ['palavra', 'biblia', 'armadura', 'efesios'],
     titulo: 'Espada do Espírito',
-    descricao: 'Leia e medite na Palavra de Deus por pelo menos 15 minutos hoje. A Bíblia é sua arma espiritual. "Tomem a espada do Espírito, que é a palavra de Deus." - Efésios 6:17',
+    descricao: 'Estude Efésios 6:17b - "E a espada do Espírito, que é a palavra de Deus". Aprenda sobre o poder da Palavra de Deus como arma ofensiva.',
     tipoMissao: 'diaria',
     nivelDificuldade: 'comum',
     tempoRestante: '24h',
@@ -400,15 +590,19 @@ export const missions: Mission[] = [
       botoes: {
         iniciar: true,
         desistir: true,
-        concluir: true
+        concluir: false
       },
       progresso: {
         porcentagem: 0,
         checkboxes: []
       },
       quiz: {
-        ativo: false,
-        perguntas: [],
+        ativo: true,
+        perguntas: [
+          'Por que a Palavra de Deus é uma espada?',
+          'Como Jesus usou a espada do Espírito?',
+          'Como devemos usar esta arma?'
+        ],
         respostas: [],
         corretas: []
       }
@@ -427,15 +621,49 @@ export const missions: Mission[] = [
       consumiveis: []
     },
     penalidades: {
-      descricao: '+1 Pecado por negligenciar a Palavra.',
+      descricao: '+1 Pecado por desistir.',
       efeitos: {
         pecado: 1,
         perdaXp: 10
       }
     },
     quizDados: {
-      ativo: false,
-      questoes: [],
+      ativo: true,
+      questoes: [
+        {
+          id: 1,
+          pergunta: 'Por que a Palavra de Deus é comparada a uma espada?',
+          opcoes: [
+            'É nossa única arma ofensiva, penetra e corta verdades espirituais',
+            'Porque machuca as pessoas',
+            'Porque é afiada',
+            'Porque é de metal'
+          ],
+          correta: 'É nossa única arma ofensiva, penetra e corta verdades espirituais'
+        },
+        {
+          id: 2,
+          pergunta: 'Como Jesus usou a espada do Espírito contra Satanás?',
+          opcoes: [
+            'Citando as Escrituras durante a tentação no deserto',
+            'Com uma espada literal',
+            'Apenas orando',
+            'Ignorando o diabo'
+          ],
+          correta: 'Citando as Escrituras durante a tentação no deserto'
+        },
+        {
+          id: 3,
+          pergunta: 'Como devemos usar a espada do Espírito?',
+          opcoes: [
+            'Conhecendo, memorizando e aplicando a Palavra na batalha espiritual',
+            'Apenas lendo a Bíblia aos domingos',
+            'Carregando uma Bíblia',
+            'Decorando versículos sem entender'
+          ],
+          correta: 'Conhecendo, memorizando e aplicando a Palavra na batalha espiritual'
+        }
+      ],
       acertos: 0,
       erros: 0
     },

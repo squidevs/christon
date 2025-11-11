@@ -38,7 +38,16 @@ const AchievementsPage: React.FC<AchievementsPageProps> = ({ onBack }) => {
         filtered = achievements;
     }
 
-    return filtered;
+    // Ordenar: desbloqueadas primeiro, depois por nome alfabético
+    return filtered.sort((a, b) => {
+      const aUnlocked = unlockedAchievements.includes(a.id);
+      const bUnlocked = unlockedAchievements.includes(b.id);
+      
+      if (aUnlocked && !bUnlocked) return -1;
+      if (!aUnlocked && bUnlocked) return 1;
+      
+      return a.name.localeCompare(b.name);
+    });
   };
 
   const getDifficultyColor = (difficulty: Achievement['difficulty']) => {
@@ -70,84 +79,88 @@ const AchievementsPage: React.FC<AchievementsPageProps> = ({ onBack }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-spiritual text-white p-6">
-        <div className="flex items-center justify-between mb-4">
-          <button 
-            onClick={onBack}
-            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-          >
-            <ArrowLeft size={24} />
-          </button>
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Trophy size={28} />
-            Conquistas
-          </h1>
-          <div className="w-10"></div>
+      {/* Header + Stats + Filtros - Sticky abaixo do header e armadura */}
+      <div className="sticky top-[218px] sm:top-[264px] z-30 bg-spiritual text-white shadow-lg">
+        <div className="p-2 sm:p-3">
+          <div className="flex items-center justify-between mb-2">
+            <button 
+              onClick={onBack}
+              className="p-1.5 sm:p-2 hover:bg-white/10 rounded-lg transition-colors"
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <h1 className="text-base sm:text-lg font-bold flex items-center gap-2">
+              <Trophy size={18} />
+              Conquistas
+            </h1>
+            <div className="w-8 sm:w-10"></div>
+          </div>
+
+          {/* Estatísticas compactas */}
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2 text-center mb-2">
+            <div className="bg-white/10 rounded-lg p-1.5">
+              <div className="text-sm sm:text-base font-bold">{unlockedCount}</div>
+              <div className="text-[9px] sm:text-[10px] opacity-90">Desbloq.</div>
+            </div>
+            <div className="bg-white/10 rounded-lg p-1.5">
+              <div className="text-sm sm:text-base font-bold">{totalAchievements}</div>
+              <div className="text-[9px] sm:text-[10px] opacity-90">Total</div>
+            </div>
+            <div className="bg-white/10 rounded-lg p-1.5">
+              <div className="text-sm sm:text-base font-bold">{totalPoints}</div>
+              <div className="text-[9px] sm:text-[10px] opacity-90">Pontos</div>
+            </div>
+          </div>
+
+          {/* Barra de Progresso */}
+          <div className="mb-2">
+            <div className="flex justify-between text-[9px] sm:text-[10px] mb-1">
+              <span>Progresso</span>
+              <span>{Math.round((unlockedCount / totalAchievements) * 100)}%</span>
+            </div>
+            <div className="w-full bg-white/20 rounded-full h-1.5">
+              <div 
+                className="bg-white h-1.5 rounded-full transition-all duration-300"
+                style={{ width: `${(unlockedCount / totalAchievements) * 100}%` }}
+              ></div>
+            </div>
+          </div>
         </div>
 
-        {/* Estatísticas */}
-        <div className="grid grid-cols-3 gap-4 text-center">
-          <div className="bg-white/10 rounded-lg p-3">
-            <div className="text-2xl font-bold">{unlockedCount}</div>
-            <div className="text-sm opacity-90">Desbloqueadas</div>
-          </div>
-          <div className="bg-white/10 rounded-lg p-3">
-            <div className="text-2xl font-bold">{totalAchievements}</div>
-            <div className="text-sm opacity-90">Total</div>
-          </div>
-          <div className="bg-white/10 rounded-lg p-3">
-            <div className="text-2xl font-bold">{totalPoints}</div>
-            <div className="text-sm opacity-90">Pontos</div>
-          </div>
-        </div>
-
-        {/* Barra de Progresso */}
-        <div className="mt-4">
-          <div className="flex justify-between text-sm mb-2">
-            <span>Progresso Geral</span>
-            <span>{Math.round((unlockedCount / totalAchievements) * 100)}%</span>
-          </div>
-          <div className="w-full bg-white/20 rounded-full h-2">
-            <div 
-              className="bg-white h-2 rounded-full transition-all duration-300"
-              style={{ width: `${(unlockedCount / totalAchievements) * 100}%` }}
-            ></div>
+        {/* Filtros */}
+        <div className="px-2 sm:px-3 pb-2 bg-gray-50">
+          <div className="flex flex-wrap gap-1 pt-2">
+            {[
+              { key: 'all', label: 'Todas' },
+              { key: 'unlocked', label: 'Desbloqueadas' },
+              { key: 'locked', label: 'Bloqueadas' },
+              { key: 'facil', label: 'Fácil' },
+              { key: 'medio', label: 'Médio' },
+              { key: 'dificil', label: 'Difícil' },
+              { key: 'biblia', label: 'Bíblia' },
+              { key: 'espiritual', label: 'Espiritual' },
+              { key: 'missoes', label: 'Missões' },
+              { key: 'especial', label: 'Especial' },
+              { key: 'devocional', label: 'Devocional' }
+            ].map((filterOption) => (
+              <button
+                key={filterOption.key}
+                onClick={() => setFilter(filterOption.key as any)}
+                className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-medium transition-colors ${
+                  filter === filterOption.key
+                    ? 'bg-spiritual text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                {filterOption.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Filtros */}
+      {/* Lista de conquistas */}
       <div className="p-4">
-        <div className="flex flex-wrap gap-2 mb-4">
-          {[
-            { key: 'all', label: 'Todas' },
-            { key: 'unlocked', label: 'Desbloqueadas' },
-            { key: 'locked', label: 'Bloqueadas' },
-            { key: 'facil', label: 'Fácil' },
-            { key: 'medio', label: 'Médio' },
-            { key: 'dificil', label: 'Difícil' },
-            { key: 'biblia', label: 'Bíblia' },
-            { key: 'espiritual', label: 'Espiritual' },
-            { key: 'missoes', label: 'Missões' },
-            { key: 'especial', label: 'Especial' },
-            { key: 'devocional', label: 'Devocional' }
-          ].map((filterOption) => (
-            <button
-              key={filterOption.key}
-              onClick={() => setFilter(filterOption.key as any)}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                filter === filterOption.key
-                  ? 'bg-spiritual text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              {filterOption.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Lista de Conquistas */}
         <div className="space-y-3">
           {filteredAchievements.map((achievement) => {
             const isUnlocked = unlockedAchievements.includes(achievement.id);

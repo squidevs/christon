@@ -599,15 +599,21 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ onAvatarUpdate, onStatusUpdat
         {/* Avatar Display - Sempre exibir apenas o avatar centralizado */}
         <div className="flex flex-col items-center space-y-4">
           <div className="relative">
-            <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-spiritual shadow-lg">
+            <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-spiritual shadow-lg relative">
+              {/* Fundo SVG */}
+              <div className="absolute inset-0">
+                {avatarBackgrounds.find(bg => bg.id === selectedBackground)?.svg}
+              </div>
+              
+              {/* Avatar sobre o fundo */}
               {profile.avatar ? (
                 <img 
                   src={profile.avatar} 
                   alt="Avatar" 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover relative z-10"
                 />
               ) : (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center relative z-10">
                   <Camera size={32} className="text-gray-400" />
                 </div>
               )}
@@ -621,6 +627,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ onAvatarUpdate, onStatusUpdat
             >
               <Edit size={16} />
             </button>
+          </div>
+
+          {/* Nome e Nível */}
+          <div className="text-center">
+            <h3 className="font-display text-xl font-bold text-dark">{profile.name}</h3>
+            <p className="text-sm text-gray-600">Nível 3 • Guerreiro da Fé</p>
           </div>
         </div>
 

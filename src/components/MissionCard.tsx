@@ -3,34 +3,40 @@ import { Mission } from '../types/mission';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as Icons from 'lucide-react';
 import { inventoryManager } from '../utils/inventoryManager';
+import QuizInterface from './QuizInterface';
 
 interface MissionCardProps {
   mission: Mission;
   onComplete: (missionId: number) => void;
   onGiveUp: (missionId: number) => void;
   onCheckboxToggle: (missionId: number, checkboxId: number) => void;
-  onQuizStart: (missionId: number) => void;
 }
 
 const MissionCard: React.FC<MissionCardProps> = ({
   mission,
   onComplete,
   onGiveUp,
-  onCheckboxToggle,
-  onQuizStart
+  onCheckboxToggle
 }) => {
   const [timeRemaining, setTimeRemaining] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [messageType, setMessageType] = useState<'success' | 'error' | 'info'>('info');
   const [messageText, setMessageText] = useState('');
   const [hasSword, setHasSword] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
 
-  // Verificar se tem Espada equipada (necessária para Quiz)
+  // Verificar se tem Espada equipada (necessária para Quiz - EXCETO missões de armadura IDs 101-106)
   useEffect(() => {
     if (mission.categoria === 'quiz') {
-      setHasSword(inventoryManager.hasSword());
+      // Missões de armadura (IDs 101-106) não requerem espada
+      const isArmorMission = mission.id >= 101 && mission.id <= 107;
+      if (isArmorMission) {
+        setHasSword(true); // Sempre permitir
+      } else {
+        setHasSword(inventoryManager.hasSword());
+      }
     }
-  }, [mission.categoria]);
+  }, [mission.categoria, mission.id]);
 
   // Ícone dinâmico
   const IconComponent = (Icons as any)[mission.elementos.icone] || Icons.Circle;
@@ -130,6 +136,14 @@ const MissionCard: React.FC<MissionCardProps> = ({
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             <h3 className="font-display font-bold text-lg text-text">{mission.titulo}</h3>
+            
+            {/* Badge especial para missões de Armadura de Deus */}
+            {mission.id >= 101 && mission.id <= 107 && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-white font-bold shadow-md animate-pulse">
+                ⚔️ ARMADURA DE DEUS
+              </span>
+            )}
+            
             <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500 text-white">
               Ação
             </span>
@@ -287,6 +301,14 @@ const MissionCard: React.FC<MissionCardProps> = ({
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             <h3 className="font-display font-bold text-lg text-text">{mission.titulo}</h3>
+            
+            {/* Badge especial para missões de Armadura de Deus */}
+            {mission.id >= 101 && mission.id <= 107 && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-white font-bold shadow-md animate-pulse">
+                ⚔️ ARMADURA DE DEUS
+              </span>
+            )}
+            
             <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500 text-white">
               Quiz
             </span>
@@ -416,7 +438,7 @@ const MissionCard: React.FC<MissionCardProps> = ({
           )}
           <div className="flex gap-2">
             <button
-              onClick={() => onQuizStart(mission.id)}
+              onClick={() => setShowQuiz(true)}
               disabled={!hasSword}
               className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
                 hasSword
@@ -433,6 +455,23 @@ const MissionCard: React.FC<MissionCardProps> = ({
               Desistir
             </button>
           </div>
+
+          {/* Quiz Modal */}
+          {showQuiz && mission.quizDados && (
+            <QuizInterface
+              questoes={mission.quizDados.questoes}
+              missionTitle={mission.titulo}
+              onComplete={(score, correct, total) => {
+                setShowQuiz(false);
+                if (score >= 60) {
+                  handleComplete();
+                } else {
+                  showFeedback('error', `Você acertou ${correct}/${total} questões. Necessário 60% para passar.`);
+                }
+              }}
+              onCancel={() => setShowQuiz(false)}
+            />
+          )}
         </>
       )}
     </>
@@ -838,7 +877,7 @@ const MissionCard: React.FC<MissionCardProps> = ({
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      className={`card relative overflow-hidden ${
+      className={`card relative overflow-hidden p-3 sm:p-4 ${
         mission.status === 'concluida' ? 'opacity-60' : ''
       } ${
         mission.status === 'expirada' ? 'border-sin border-2' : ''
@@ -847,7 +886,7 @@ const MissionCard: React.FC<MissionCardProps> = ({
       {/* Badge de status */}
       {mission.status === 'concluida' && (
         <div className="absolute top-2 right-2">
-          <Icons.CheckCircle className="w-6 h-6 text-victory" />
+          <Icons.CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-victory" />
         </div>
       )}
 
@@ -861,7 +900,7 @@ const MissionCard: React.FC<MissionCardProps> = ({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className={`mt-3 p-3 rounded-lg text-sm ${
+            className={`mt-3 p-2 sm:p-3 rounded-lg text-xs sm:text-sm ${
               messageType === 'success' ? 'bg-victory/20 text-victory' :
               messageType === 'error' ? 'bg-sin/20 text-sin' :
               'bg-spiritual/20 text-spiritual'

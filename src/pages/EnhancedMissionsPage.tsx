@@ -56,6 +56,7 @@ const EnhancedMissionsPage: React.FC = () => {
     const mission = missions.find(m => m.id === missionId);
     if (!mission) return;
 
+    console.log('🎮 Tentando completar missão:', missionId);
     missionsManager.completeMission(missionId, mission);
     
     setMissions(prevMissions =>
@@ -63,6 +64,12 @@ const EnhancedMissionsPage: React.FC = () => {
         m.id === missionId ? { ...m, status: 'concluida' } : m
       )
     );
+    
+    // Mostrar alerta de sucesso
+    alert(`✅ Missão concluída!\n\n🎁 Recompensas recebidas:\n• +${mission.recompensas.xpSabedoria} XP Sabedoria\n• +${mission.recompensas.moedasFe} Moedas de Fé\n\nVerifique seu inventário!`);
+    
+    // Recarregar a página para atualizar o HUD e inventário
+    setTimeout(() => window.location.reload(), 1500);
   };
 
   // Handler de desistir
@@ -103,11 +110,6 @@ const EnhancedMissionsPage: React.FC = () => {
     );
   };
 
-  // Handler de iniciar quiz (placeholder)
-  const handleQuizStart = (missionId: number) => {
-    alert(`Quiz da missão ${missionId} será implementado em breve!`);
-  };
-
   // Filtrar missões
   const filteredMissions = missions.filter(mission => {
     // Filtro de tipo
@@ -137,99 +139,95 @@ const EnhancedMissionsPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="font-display text-3xl font-bold text-text mb-2">Missões Espirituais</h1>
-        <p className="text-gray-600">Complete missões para fortalecer sua armadura e crescer em sabedoria.</p>
-      </div>
+    <div className="max-w-7xl mx-auto">
+      {/* Header + Stats + Filtros - Sticky abaixo do header e armadura */}
+      <div className="sticky top-[10px] sm:top-[264px] z-30 bg-primary pb-2 sm:pb-3 px-3 sm:px-4">
+        {/* Header compacto */}
+        <div className="mb-2 pt-2">
+          <h1 className="font-display text-base sm:text-xl font-bold text-text">Missões Espirituais</h1>
+        </div>
 
-      {/* Estatísticas */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-2 mb-1">
-            <Icons.Target className="w-5 h-5 text-spiritual" />
-            <span className="text-sm text-gray-600">Total</span>
-          </div>
-          <p className="text-2xl font-bold text-text">{stats.total}</p>
-        </div>
-        
-        <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-2 mb-1">
-            <Icons.Zap className="w-5 h-5 text-wisdom" />
-            <span className="text-sm text-gray-600">Ativas</span>
-          </div>
-          <p className="text-2xl font-bold text-wisdom">{stats.ativas}</p>
-        </div>
-        
-        <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-2 mb-1">
-            <Icons.CheckCircle className="w-5 h-5 text-victory" />
-            <span className="text-sm text-gray-600">Concluídas</span>
-          </div>
-          <p className="text-2xl font-bold text-victory">{stats.concluidas}</p>
-        </div>
-        
-        <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-2 mb-1">
-            <Icons.XCircle className="w-5 h-5 text-sin" />
-            <span className="text-sm text-gray-600">Expiradas</span>
-          </div>
-          <p className="text-2xl font-bold text-sin">{stats.expiradas}</p>
-        </div>
-      </div>
-
-      {/* Filtros */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6">
-        <div className="flex flex-col md:flex-row gap-4">
-          {/* Filtro de Tipo */}
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Periodicidade
-            </label>
-            <div className="flex gap-2 flex-wrap">
-              {(['todas', 'diaria', 'semanal', 'mensal'] as const).map(tipo => (
-                <button
-                  key={tipo}
-                  onClick={() => setFiltroTipo(tipo)}
-                  className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-                    filtroTipo === tipo
-                      ? 'bg-spiritual text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
-                </button>
-              ))}
+        {/* Estatísticas compactas */}
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mb-2">
+          <div className="bg-white rounded-lg p-1.5 sm:p-2 shadow-sm border border-gray-100">
+            <div className="flex items-center gap-1 mb-0.5">
+              <Icons.Target className="w-3 h-3 text-spiritual" />
+              <span className="text-[9px] sm:text-[10px] text-gray-600">Total</span>
             </div>
+            <p className="text-sm sm:text-base font-bold text-text">{stats.total}</p>
           </div>
+          
+          <div className="bg-white rounded-lg p-1.5 sm:p-2 shadow-sm border border-gray-100">
+            <div className="flex items-center gap-1 mb-0.5">
+              <Icons.Zap className="w-3 h-3 text-wisdom" />
+              <span className="text-[9px] sm:text-[10px] text-gray-600">Ativas</span>
+            </div>
+            <p className="text-sm sm:text-base font-bold text-wisdom">{stats.ativas}</p>
+          </div>
+          
+          <div className="bg-white rounded-lg p-1.5 sm:p-2 shadow-sm border border-gray-100">
+            <div className="flex items-center gap-1 mb-0.5">
+              <Icons.CheckCircle className="w-3 h-3 text-victory" />
+              <span className="text-[9px] sm:text-[10px] text-gray-600">Feitas</span>
+            </div>
+            <p className="text-sm sm:text-base font-bold text-victory">{stats.concluidas}</p>
+          </div>
+          
+          <div className="bg-white rounded-lg p-1.5 sm:p-2 shadow-sm border border-gray-100">
+            <div className="flex items-center gap-1 mb-0.5">
+              <Icons.XCircle className="w-3 h-3 text-sin" />
+              <span className="text-[9px] sm:text-[10px] text-gray-600">Perdidas</span>
+            </div>
+            <p className="text-sm sm:text-base font-bold text-sin">{stats.expiradas}</p>
+          </div>
+        </div>
 
-          {/* Filtro de Categoria */}
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Categoria
-            </label>
-            <div className="flex gap-2 flex-wrap">
-              {(['todas', 'acao', 'quiz', 'casal', 'checklist'] as const).map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setFiltroCategoria(cat)}
-                  className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-                    filtroCategoria === cat
-                      ? 'bg-wisdom text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                </button>
-              ))}
+        {/* Filtros compactos */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-1.5 sm:p-2">
+          <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2">
+            {/* Filtro de Tipo */}
+            <div className="flex-1">
+              <div className="flex gap-1 flex-wrap">
+                {(['todas', 'diaria', 'semanal', 'mensal'] as const).map(tipo => (
+                  <button
+                    key={tipo}
+                    onClick={() => setFiltroTipo(tipo)}
+                    className={`px-2 py-1 rounded-lg font-medium text-[10px] sm:text-xs transition-colors ${
+                      filtroTipo === tipo
+                        ? 'bg-spiritual text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Filtro de Categoria */}
+            <div className="flex-1">
+              <div className="flex gap-1 flex-wrap">
+                {(['todas', 'acao', 'quiz', 'casal', 'checklist'] as const).map(cat => (
+                  <button
+                    key={cat}
+                    onClick={() => setFiltroCategoria(cat)}
+                    className={`px-2 py-1 rounded-lg font-medium text-[10px] sm:text-xs transition-colors ${
+                      filtroCategoria === cat
+                        ? 'bg-wisdom text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Lista de Missões */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 px-3 sm:px-4 py-3 sm:py-6">
         {filteredMissions.length > 0 ? (
           filteredMissions.map(mission => (
             <MissionCard
@@ -238,7 +236,6 @@ const EnhancedMissionsPage: React.FC = () => {
               onComplete={handleComplete}
               onGiveUp={handleGiveUp}
               onCheckboxToggle={handleCheckboxToggle}
-              onQuizStart={handleQuizStart}
             />
           ))
         ) : (
