@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, BookOpen, Play, Lock, Check, Star, Trophy, Target, Clock } from 'lucide-react';
+import { ArrowLeft, BookOpen, Play, Lock, Check, Star, Trophy, Target, Clock, AlertCircle } from 'lucide-react';
 import { studyBooks, StudyBook, StudyChapter, getCurrentStudyData, StudyProgress } from '../data/studies';
 import { quizQuestions } from '../data/missions';
+import { inventoryManager } from '../utils/inventoryManager';
 
 interface StudiesPageProps {
   onBack: () => void;
@@ -30,6 +31,50 @@ const StudiesPage: React.FC<StudiesPageProps> = ({ onBack }) => {
   const [chapterQuiz, setChapterQuiz] = useState<ChapterQuizState | null>(null);
   const [finalQuiz, setFinalQuiz] = useState<FinalQuizState | null>(null);
   const [studyProgress, setStudyProgress] = useState<StudyProgress>(getCurrentStudyData());
+  const [hasBible, setHasBible] = useState(false);
+
+  // Verificar se tem Bíblia equipada
+  useEffect(() => {
+    setHasBible(inventoryManager.hasBible());
+  }, []);
+
+  // Se não tem Bíblia, mostrar tela de bloqueio
+  if (!hasBible) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-4 flex items-center justify-center">
+        <div className="max-w-md mx-auto">
+          <div className="bg-white rounded-xl p-8 text-center shadow-lg">
+            <div className="mb-6">
+              <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+                <Lock size={40} className="text-gray-400" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Estudos Bloqueados</h2>
+              <p className="text-gray-600">
+                Você precisa equipar a <strong>Bíblia Sagrada</strong> para acessar os estudos bíblicos.
+              </p>
+            </div>
+
+            <div className="bg-spiritual/10 rounded-lg p-4 mb-6">
+              <div className="flex items-start gap-3 text-left">
+                <BookOpen className="w-5 h-5 text-spiritual mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-spiritual">
+                  <p className="font-medium mb-1">Como obter a Bíblia Sagrada:</p>
+                  <p>Complete a missão <strong>"Adquirir a Bíblia Sagrada"</strong> na área de Missões.</p>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={onBack}
+              className="w-full btn-primary"
+            >
+              Voltar para Missões
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     // Atualizar progresso dos livros baseado nos capítulos completados

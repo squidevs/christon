@@ -5,7 +5,7 @@ import BottomNavigation from './components/BottomNavigation';
 import ActionsPage from './pages/ActionsPage';
 import ItemsPage from './pages/ItemsPage';
 import { safeLocalStorage } from './utils/storage';
-import MissionsPage from './pages/MissionsPage';
+import EnhancedMissionsPage from './pages/EnhancedMissionsPage';
 import ProfilePage from './pages/ProfilePage';
 import AchievementsPage from './pages/AchievementsPage';
 import StudiesPage from './pages/StudiesPage';
@@ -84,7 +84,7 @@ function App() {
       case 'inicio':
         return <ActionsPage />;
       case 'missoes':
-        return <MissionsPage userStatus={playerStatus} />;
+        return <EnhancedMissionsPage />;
       case 'estudos':
         return <StudiesPage onBack={() => setActiveTab('inicio')} />;
       case 'conquistas':
