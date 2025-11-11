@@ -60,6 +60,10 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <header className="bg-dark text-white sticky top-0 z-50 shadow-lg">
       <div className="p-3 sm:p-4">
+        {/* Título HUD */}
+        <div className="flex flex-wrap gap-2 mb-2 text-[11px] sm:text-xs font-semibold text-gray-300">
+          <span className="bg-gray-800/60 px-2 py-0.5 rounded">HUD Espiritual</span>
+        </div>
         {/* Linha Principal */}
         <div className="flex items-center justify-between gap-4">
           {/* Esquerda: Avatar + Nome + Barra Espírito Santo */}
@@ -214,40 +218,50 @@ const Header: React.FC<HeaderProps> = ({
 
         {/* Linha de Slots de Itens Equipados + Stats */}
         <div className="mt-3 border-t border-gray-700 pt-3">
+          {/* Título dos slots de inventário */}
+          <div className="flex items-center justify-center mb-1">
+            <span className="text-[10px] sm:text-xs bg-gray-800/60 px-2 py-0.5 rounded">Slots de Inventário</span>
+          </div>
           <div className="flex items-center justify-center gap-1 sm:gap-1.5">
             {/* Slots de itens */}
-            <EquippedItemsSlots compact={true} />
-            
+            <div className="flex flex-col items-center gap-0.5">
+              <span className="text-[9px] sm:text-[10px] text-wisdom">Permanentes</span>
+              <div><EquippedItemsSlots compact={true} /></div>
+              <span className="text-[9px] sm:text-[10px] text-victory">Consumíveis</span>
+            </div>
             {/* Separador */}
             <div className="w-px h-8 sm:h-10 bg-gray-600" />
-            
             {/* Stats à direita dos slots - mesma altura */}
-            <div className="flex items-center gap-1 sm:gap-1.5">
-              {/* Sabedoria */}
-              <div className="flex items-center justify-center gap-1 bg-wisdom/30 rounded-lg border border-wisdom/50 h-10 w-10 sm:h-12 sm:w-12">
-                <div className="flex flex-col items-center">
-                  <Brain size={14} className="sm:w-4 sm:h-4 text-wisdom" />
-                  <span className="text-wisdom font-bold text-[9px] sm:text-[10px]">{wisdom}</span>
-                </div>
-              </div>
-              
-              {/* Ofensiva (Streak) */}
-              <div className="flex items-center justify-center gap-1 bg-victory/30 rounded-lg border border-victory/50 h-10 w-10 sm:h-12 sm:w-12">
-                <div className="flex flex-col items-center">
-                  <Flame size={14} className="sm:w-4 sm:h-4 text-victory" />
-                  <span className="text-victory font-bold text-[9px] sm:text-[10px]">{streak}</span>
-                </div>
-              </div>
-              
-              {/* Pecado */}
-              {sin > 0 && (
-                <div className="flex items-center justify-center gap-1 bg-sin/30 rounded-lg border border-sin/50 h-10 w-10 sm:h-12 sm:w-12">
+            <div className="flex flex-col items-center gap-0.5">
+              <span className="text-[10px] sm:text-xs bg-gray-800/60 px-2 py-0.5 rounded">Status</span>
+              <div className="flex items-center gap-1 sm:gap-1.5">
+                {/* Sabedoria */}
+                <div className="flex items-center justify-center gap-1 bg-wisdom/30 rounded-lg border border-wisdom/50 h-10 w-10 sm:h-12 sm:w-12">
                   <div className="flex flex-col items-center">
-                    <AlertTriangle size={14} className="sm:w-4 sm:h-4 text-sin" />
-                    <span className="text-sin font-bold text-[9px] sm:text-[10px]">{sin}</span>
+                    <Brain size={14} className="sm:w-4 sm:h-4 text-wisdom" />
+                    <span className="text-wisdom font-bold text-[9px] sm:text-[10px]">{wisdom}</span>
                   </div>
                 </div>
-              )}
+                {/* Ofensiva (Streak) */}
+                <div className="flex items-center justify-center gap-1 bg-victory/30 rounded-lg border border-victory/50 h-10 w-10 sm:h-12 sm:w-12">
+                  <div className="flex flex-col items-center">
+                    <Flame size={14} className="sm:w-4 sm:h-4 text-victory" />
+                    <span className="text-victory font-bold text-[9px] sm:text-[10px]">{streak}</span>
+                  </div>
+                </div>
+                {/* Pecado */}
+                {sin > 0 && (
+                  <div className="flex items-center justify-center gap-1 bg-sin/30 rounded-lg border border-sin/50 h-10 w-10 sm:h-12 sm:w-12">
+                    <div className="flex flex-col items-center">
+                      <AlertTriangle size={14} className="sm:w-4 sm:h-4 text-sin" />
+                      <span className="text-sin font-bold text-[9px] sm:text-[10px]">{sin}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <span className="text-[9px] sm:text-[10px] text-wisdom">Sabedoria</span>
+              <span className="text-[9px] sm:text-[10px] text-victory">Ofensiva</span>
+              {sin > 0 && <span className="text-[9px] sm:text-[10px] text-sin">Pecado</span>}
             </div>
           </div>
         </div>
@@ -255,52 +269,52 @@ const Header: React.FC<HeaderProps> = ({
         {/* Linha de Slots da Armadura de Deus */}
         {armorPieces && (
           <div className="mt-2 pt-2 border-t border-gray-700">
-            <div className="flex items-center justify-center gap-1 sm:gap-1.5 overflow-x-auto pb-1">
-              {Object.entries(armorPieces).map(([key, piece]) => {
-                const getArmorIcon = () => {
-                  switch (key) {
-                    case 'beltOfTruth': return <Shield size={14} className="sm:w-4 sm:h-4" />;
-                    case 'breastplateOfRighteousness': return <Layers size={14} className="sm:w-4 sm:h-4" />;
-                    case 'sandalsOfPeace': return <Footprints size={14} className="sm:w-4 sm:h-4" />;
-                    case 'shieldOfFaith': return <ShieldCheck size={14} className="sm:w-4 sm:h-4" />;
-                    case 'helmetOfSalvation': return <Crown size={14} className="sm:w-4 sm:h-4" />;
-                    case 'swordOfSpirit': return <Sword size={14} className="sm:w-4 sm:h-4" />;
-                    case 'cloakOfWisdom': return <Heart size={14} className="sm:w-4 sm:h-4" />;
-                    default: return <Shield size={14} className="sm:w-4 sm:h-4" />;
-                  }
-                };
-
-                return (
-                  <div 
-                    key={key}
-                    className={`relative flex flex-col items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-lg border-2 transition-all overflow-hidden ${
-                      piece.equipped 
-                        ? 'bg-gray-800/50 border-wisdom text-wisdom' 
-                        : 'bg-gray-700/30 border-gray-600 text-gray-500'
-                    }`}
-                  >
-                    {/* Barra de integridade de fundo */}
-                    {piece.equipped && piece.integrity > 0 && (
-                      <div 
-                        className="absolute bottom-0 left-0 right-0 bg-wisdom/40 transition-all duration-300"
-                        style={{ height: `${piece.integrity}%` }}
-                      />
-                    )}
-                    
-                    {/* Ícone da armadura */}
-                    <div className="relative z-10">
-                      {getArmorIcon()}
-                    </div>
-                    
-                    {/* Porcentagem de integridade */}
-                    {piece.equipped && (
-                      <div className="relative z-10 text-[8px] sm:text-[9px] font-bold text-wisdom mt-0.5">
-                        {piece.integrity}%
+            <div className="flex flex-col items-center gap-1">
+              <span className="text-[10px] sm:text-xs bg-gray-800/60 px-2 py-0.5 rounded">Armadura de Deus <span className="text-spiritual">(Efésios 6:10-18)</span></span>
+              <div className="flex items-center justify-center gap-1 sm:gap-1.5 overflow-x-auto pb-1">
+                {Object.entries(armorPieces).map(([key, piece]) => {
+                  const getArmorIcon = () => {
+                    switch (key) {
+                      case 'beltOfTruth': return <Shield size={14} className="sm:w-4 sm:h-4" />;
+                      case 'breastplateOfRighteousness': return <Layers size={14} className="sm:w-4 sm:h-4" />;
+                      case 'sandalsOfPeace': return <Footprints size={14} className="sm:w-4 sm:h-4" />;
+                      case 'shieldOfFaith': return <ShieldCheck size={14} className="sm:w-4 sm:h-4" />;
+                      case 'helmetOfSalvation': return <Crown size={14} className="sm:w-4 sm:h-4" />;
+                      case 'swordOfSpirit': return <Sword size={14} className="sm:w-4 sm:h-4" />;
+                      case 'cloakOfWisdom': return <Heart size={14} className="sm:w-4 sm:h-4" />;
+                      default: return <Shield size={14} className="sm:w-4 sm:h-4" />;
+                    }
+                  };
+                  return (
+                    <div 
+                      key={key}
+                      className={`relative flex flex-col items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-lg border-2 transition-all overflow-hidden ${
+                        piece.equipped 
+                          ? 'bg-gray-800/50 border-wisdom text-wisdom' 
+                          : 'bg-gray-700/30 border-gray-600 text-gray-500'
+                      }`}
+                    >
+                      {/* Barra de integridade de fundo */}
+                      {piece.equipped && piece.integrity > 0 && (
+                        <div 
+                          className="absolute bottom-0 left-0 right-0 bg-wisdom/40 transition-all duration-300"
+                          style={{ height: `${piece.integrity}%` }}
+                        />
+                      )}
+                      {/* Ícone da armadura */}
+                      <div className="relative z-10">
+                        {getArmorIcon()}
                       </div>
-                    )}
-                  </div>
-                );
-              })}
+                      {/* Porcentagem de integridade */}
+                      {piece.equipped && (
+                        <div className="relative z-10 text-[8px] sm:text-[9px] font-bold text-wisdom mt-0.5">
+                          {piece.integrity}%
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         )}
