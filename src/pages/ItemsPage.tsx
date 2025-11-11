@@ -69,7 +69,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onEquip, onUnequip, onUse }) 
     <div className={`relative rounded-lg border-2 ${getRarityColor()} p-4 transition-all hover:shadow-md`}>
       {/* Badge de Equipado */}
       {item.equipped && (
-        <div className="absolute -top-2 -right-2 bg-victory rounded-full p-1 shadow-lg z-10">
+        <div className="absolute -top-2 -right-2 bg-victory rounded-full p-1 shadow-lg z-[5]">
           <CheckCircle2 className="w-4 h-4 text-white" />
         </div>
       )}

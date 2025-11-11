@@ -6,7 +6,450 @@ const oneWeek = 7 * oneDay;
 const oneMonth = 30 * oneDay;
 
 export const missions: Mission[] = [
-  // MISSÕES DA ARMADURA DE DEUS - INICIAIS
+  // MISSÕES SIMPLES PARA DESBLOQUEAR ARMADURA - LEITURA DE VERSÍCULOS
+  {
+    id: 100,
+    categoria: 'acao',
+    tags: ['armadura', 'leitura', 'efesios', 'cinturao'],
+    titulo: 'Desbloqueie: Cinturão da Verdade',
+    descricao: 'Leia Efésios 6:14a - "Estejam firmes, cingindo-se com o cinturão da verdade" e confirme a leitura para desbloquear o Cinturão da Verdade.',
+    tipoMissao: 'diaria',
+    nivelDificuldade: 'comum',
+    tempoRestante: '24h',
+    status: 'ativa',
+    dataInicio: now,
+    dataExpiracao: now + oneDay,
+    restricoes: {
+      somenteCasado: false,
+      somenteBatizado: false,
+      requerSalvo: false
+    },
+    elementos: {
+      icone: 'Shield',
+      corTema: '#8B4513',
+      background: 'linear-gradient(135deg, #8B4513 0%, #D2691E 100%)'
+    },
+    interacoes: {
+      botoes: {
+        iniciar: true,
+        desistir: true,
+        concluir: true
+      },
+      progresso: {
+        porcentagem: 0,
+        checkboxes: [
+          { id: 1, texto: 'Li Efésios 6:14a', feito: false }
+        ]
+      },
+      quiz: { ativo: false, perguntas: [], respostas: [], corretas: [] }
+    },
+    recompensas: {
+      xpSabedoria: 50,
+      moedasFe: 20,
+      armadura: { capacete: 0, espada: 0, escudo: 0, couraca: 0, sandalias: 0, oracao: 0 },
+      consumiveis: []
+    },
+    penalidades: {
+      descricao: 'Sem penalidades',
+      efeitos: {
+        pecado: 0,
+        perdaXp: 0
+      }
+    },
+    quizDados: {
+      ativo: false,
+      questoes: [],
+      acertos: 0,
+      erros: 0
+    },
+    metricaEspiritual: {
+      sabedoria: 10,
+      fe: 5,
+      pecado: 0,
+      espirito: 5,
+      salvacao: 5
+    }
+  },
+  {
+    id: 110,
+    categoria: 'acao',
+    tags: ['armadura', 'leitura', 'efesios', 'couraca'],
+    titulo: 'Desbloqueie: Couraça da Justiça',
+    descricao: 'Leia Efésios 6:14b - "com a couraça da justiça no lugar" e confirme a leitura para desbloquear a Couraça da Justiça.',
+    tipoMissao: 'diaria',
+    nivelDificuldade: 'comum',
+    tempoRestante: '24h',
+    status: 'ativa',
+    dataInicio: now,
+    dataExpiracao: now + oneDay,
+    restricoes: {
+      somenteCasado: false,
+      somenteBatizado: false,
+      requerSalvo: false
+    },
+    elementos: {
+      icone: 'ShieldCheck',
+      corTema: '#4169E1',
+      background: 'linear-gradient(135deg, #4169E1 0%, #1E90FF 100%)'
+    },
+    interacoes: {
+      botoes: {
+        iniciar: true,
+        desistir: true,
+        concluir: true
+      },
+      progresso: {
+        porcentagem: 0,
+        checkboxes: [
+          { id: 1, texto: 'Li Efésios 6:14b', feito: false }
+        ]
+      },
+      quiz: { ativo: false, perguntas: [], respostas: [], corretas: [] }
+    },
+    recompensas: {
+      xpSabedoria: 50,
+      moedasFe: 20,
+      armadura: { capacete: 0, espada: 0, escudo: 0, couraca: 0, sandalias: 0, oracao: 0 },
+      consumiveis: []
+    },
+    penalidades: {
+      descricao: 'Sem penalidades',
+      efeitos: {
+        pecado: 0,
+        perdaXp: 0
+      }
+    },
+    quizDados: {
+      ativo: false,
+      questoes: [],
+      acertos: 0,
+      erros: 0
+    },
+    metricaEspiritual: {
+      sabedoria: 10,
+      fe: 5,
+      pecado: 0,
+      espirito: 5,
+      salvacao: 5
+    }
+  },
+  {
+    id: 111,
+    categoria: 'acao',
+    tags: ['armadura', 'leitura', 'efesios', 'sandalias'],
+    titulo: 'Desbloqueie: Sandálias da Prontidão',
+    descricao: 'Leia Efésios 6:15 - "Calcem os pés com a prontidão que vem do evangelho da paz" e confirme a leitura para desbloquear as Sandálias da Prontidão.',
+    tipoMissao: 'diaria',
+    nivelDificuldade: 'comum',
+    tempoRestante: '24h',
+    status: 'ativa',
+    dataInicio: now,
+    dataExpiracao: now + oneDay,
+    restricoes: {
+      somenteCasado: false,
+      somenteBatizado: false,
+      requerSalvo: false
+    },
+    elementos: {
+      icone: 'Footprints',
+      corTema: '#32CD32',
+      background: 'linear-gradient(135deg, #32CD32 0%, #228B22 100%)'
+    },
+    interacoes: {
+      botoes: {
+        iniciar: true,
+        desistir: true,
+        concluir: true
+      },
+      progresso: {
+        porcentagem: 0,
+        checkboxes: [
+          { id: 1, texto: 'Li Efésios 6:15', feito: false }
+        ]
+      },
+      quiz: { ativo: false, perguntas: [], respostas: [], corretas: [] }
+    },
+    recompensas: {
+      xpSabedoria: 50,
+      moedasFe: 20,
+      armadura: { capacete: 0, espada: 0, escudo: 0, couraca: 0, sandalias: 0, oracao: 0 },
+      consumiveis: []
+    },
+    penalidades: {
+      descricao: 'Sem penalidades',
+      efeitos: {
+        pecado: 0,
+        perdaXp: 0
+      }
+    },
+    quizDados: {
+      ativo: false,
+      questoes: [],
+      acertos: 0,
+      erros: 0
+    },
+    metricaEspiritual: {
+      sabedoria: 10,
+      fe: 5,
+      pecado: 0,
+      espirito: 5,
+      salvacao: 5
+    }
+  },
+  {
+    id: 112,
+    categoria: 'acao',
+    tags: ['armadura', 'leitura', 'efesios', 'escudo'],
+    titulo: 'Desbloqueie: Escudo da Fé',
+    descricao: 'Leia Efésios 6:16 - "Além disso, tomem o escudo da fé, com o qual vocês poderão apagar todas as setas inflamadas do Maligno" e confirme a leitura para desbloquear o Escudo da Fé.',
+    tipoMissao: 'diaria',
+    nivelDificuldade: 'comum',
+    tempoRestante: '24h',
+    status: 'ativa',
+    dataInicio: now,
+    dataExpiracao: now + oneDay,
+    restricoes: {
+      somenteCasado: false,
+      somenteBatizado: false,
+      requerSalvo: false
+    },
+    elementos: {
+      icone: 'Shield',
+      corTema: '#9370DB',
+      background: 'linear-gradient(135deg, #9370DB 0%, #8A2BE2 100%)'
+    },
+    interacoes: {
+      botoes: {
+        iniciar: true,
+        desistir: true,
+        concluir: true
+      },
+      progresso: {
+        porcentagem: 0,
+        checkboxes: [
+          { id: 1, texto: 'Li Efésios 6:16', feito: false }
+        ]
+      },
+      quiz: { ativo: false, perguntas: [], respostas: [], corretas: [] }
+    },
+    recompensas: {
+      xpSabedoria: 50,
+      moedasFe: 20,
+      armadura: { capacete: 0, espada: 0, escudo: 0, couraca: 0, sandalias: 0, oracao: 0 },
+      consumiveis: []
+    },
+    penalidades: {
+      descricao: 'Sem penalidades',
+      efeitos: {
+        pecado: 0,
+        perdaXp: 0
+      }
+    },
+    quizDados: {
+      ativo: false,
+      questoes: [],
+      acertos: 0,
+      erros: 0
+    },
+    metricaEspiritual: {
+      sabedoria: 10,
+      fe: 5,
+      pecado: 0,
+      espirito: 5,
+      salvacao: 5
+    }
+  },
+  {
+    id: 113,
+    categoria: 'acao',
+    tags: ['armadura', 'leitura', 'efesios', 'capacete'],
+    titulo: 'Desbloqueie: Capacete da Salvação',
+    descricao: 'Leia Efésios 6:17a - "Tomem o capacete da salvação" e confirme a leitura para desbloquear o Capacete da Salvação.',
+    tipoMissao: 'diaria',
+    nivelDificuldade: 'comum',
+    tempoRestante: '24h',
+    status: 'ativa',
+    dataInicio: now,
+    dataExpiracao: now + oneDay,
+    restricoes: {
+      somenteCasado: false,
+      somenteBatizado: false,
+      requerSalvo: false
+    },
+    elementos: {
+      icone: 'Crown',
+      corTema: '#FFD700',
+      background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)'
+    },
+    interacoes: {
+      botoes: {
+        iniciar: true,
+        desistir: true,
+        concluir: true
+      },
+      progresso: {
+        porcentagem: 0,
+        checkboxes: [
+          { id: 1, texto: 'Li Efésios 6:17a', feito: false }
+        ]
+      },
+      quiz: { ativo: false, perguntas: [], respostas: [], corretas: [] }
+    },
+    recompensas: {
+      xpSabedoria: 50,
+      moedasFe: 20,
+      armadura: { capacete: 0, espada: 0, escudo: 0, couraca: 0, sandalias: 0, oracao: 0 },
+      consumiveis: []
+    },
+    penalidades: {
+      descricao: 'Sem penalidades',
+      efeitos: {
+        pecado: 0,
+        perdaXp: 0
+      }
+    },
+    quizDados: {
+      ativo: false,
+      questoes: [],
+      acertos: 0,
+      erros: 0
+    },
+    metricaEspiritual: {
+      sabedoria: 10,
+      fe: 5,
+      pecado: 0,
+      espirito: 5,
+      salvacao: 5
+    }
+  },
+  {
+    id: 114,
+    categoria: 'acao',
+    tags: ['armadura', 'leitura', 'efesios', 'espada'],
+    titulo: 'Desbloqueie: Espada do Espírito',
+    descricao: 'Leia Efésios 6:17b - "e a espada do Espírito, que é a palavra de Deus" e confirme a leitura para desbloquear a Espada do Espírito.',
+    tipoMissao: 'diaria',
+    nivelDificuldade: 'comum',
+    tempoRestante: '24h',
+    status: 'ativa',
+    dataInicio: now,
+    dataExpiracao: now + oneDay,
+    restricoes: {
+      somenteCasado: false,
+      somenteBatizado: false,
+      requerSalvo: false
+    },
+    elementos: {
+      icone: 'Sword',
+      corTema: '#DC143C',
+      background: 'linear-gradient(135deg, #DC143C 0%, #8B0000 100%)'
+    },
+    interacoes: {
+      botoes: {
+        iniciar: true,
+        desistir: true,
+        concluir: true
+      },
+      progresso: {
+        porcentagem: 0,
+        checkboxes: [
+          { id: 1, texto: 'Li Efésios 6:17b', feito: false }
+        ]
+      },
+      quiz: { ativo: false, perguntas: [], respostas: [], corretas: [] }
+    },
+    recompensas: {
+      xpSabedoria: 50,
+      moedasFe: 20,
+      armadura: { capacete: 0, espada: 0, escudo: 0, couraca: 0, sandalias: 0, oracao: 0 },
+      consumiveis: []
+    },
+    penalidades: {
+      descricao: 'Sem penalidades',
+      efeitos: {
+        pecado: 0,
+        perdaXp: 0
+      }
+    },
+    quizDados: {
+      ativo: false,
+      questoes: [],
+      acertos: 0,
+      erros: 0
+    },
+    metricaEspiritual: {
+      sabedoria: 10,
+      fe: 5,
+      pecado: 0,
+      espirito: 5,
+      salvacao: 5
+    }
+  },
+  {
+    id: 115,
+    categoria: 'acao',
+    tags: ['armadura', 'leitura', 'sabedoria', 'manto'],
+    titulo: 'Desbloqueie: Manto da Sabedoria',
+    descricao: 'Leia Tiago 1:5 - "Se algum de vocês tem falta de sabedoria, peça-a a Deus, que a todos dá livremente, de boa vontade" e confirme a leitura para desbloquear o Manto da Sabedoria.',
+    tipoMissao: 'diaria',
+    nivelDificuldade: 'comum',
+    tempoRestante: '24h',
+    status: 'ativa',
+    dataInicio: now,
+    dataExpiracao: now + oneDay,
+    restricoes: {
+      somenteCasado: false,
+      somenteBatizado: false,
+      requerSalvo: false
+    },
+    elementos: {
+      icone: 'Heart',
+      corTema: '#9B59B6',
+      background: 'linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%)'
+    },
+    interacoes: {
+      botoes: {
+        iniciar: true,
+        desistir: true,
+        concluir: true
+      },
+      progresso: {
+        porcentagem: 0,
+        checkboxes: [
+          { id: 1, texto: 'Li Tiago 1:5', feito: false }
+        ]
+      },
+      quiz: { ativo: false, perguntas: [], respostas: [], corretas: [] }
+    },
+    recompensas: {
+      xpSabedoria: 50,
+      moedasFe: 20,
+      armadura: { capacete: 0, espada: 0, escudo: 0, couraca: 0, sandalias: 0, oracao: 0 },
+      consumiveis: []
+    },
+    penalidades: {
+      descricao: 'Sem penalidades',
+      efeitos: {
+        pecado: 0,
+        perdaXp: 0
+      }
+    },
+    quizDados: {
+      ativo: false,
+      questoes: [],
+      acertos: 0,
+      erros: 0
+    },
+    metricaEspiritual: {
+      sabedoria: 15,
+      fe: 5,
+      pecado: 0,
+      espirito: 5,
+      salvacao: 5
+    }
+  },
+
+  // MISSÕES DA ARMADURA DE DEUS - INICIAIS (ORIGINAIS)
   {
     id: 101,
     categoria: 'quiz',

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Header from './components/Header';
-import ArmorHUD from './components/ArmorHUD';
 import BottomNavigation from './components/BottomNavigation';
 import ActionsPage from './pages/ActionsPage';
 import ItemsPage from './pages/ItemsPage';
@@ -155,20 +154,14 @@ function App() {
         avatarBackground={avatarBackground}
         sin={playerSin}
         onNavigate={setActiveTab}
+        armorPieces={armorPieces}
       />
       
-      {/* Armadura de Deus - Sticky abaixo do header */}
-      <div className="sticky top-[138px] sm:top-[164px] z-40 bg-primary shadow-md">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2">
-          <ArmorHUD armorPieces={armorPieces} />
-        </div>
-      </div>
-      
-      <div className="">
+      <div className="flex-1 overflow-y-auto pb-20">
         {renderContent()}
       </div>
       
-      <div className="fixed bottom-0 left-0 right-0">
+      <div className="fixed bottom-0 left-0 right-0 z-[100]">
         <BottomNavigation
           activeTab={activeTab}
           onTabChange={setActiveTab}

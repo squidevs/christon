@@ -114,7 +114,7 @@ const EquippedItemsSlots: React.FC<EquippedItemsSlotsProps> = ({ onUpdate, compa
     <div className={compact ? '' : 'bg-white rounded-lg p-3 shadow-sm border border-gray-100'}>
       {!compact && <h4 className="text-xs font-semibold text-gray-700 mb-2">Itens Equipados</h4>}
       
-      <div className={`flex items-center gap-2 ${compact ? 'justify-center' : ''}`}>
+      <div className={`flex items-center ${compact ? 'gap-1 sm:gap-1.5 justify-center' : 'gap-2'}`}>
         {/* Permanentes - 2 slots (PRIMEIRO) */}
         {permanentSlots.map((slot, index) => (
           <div key={`permanent-${index}`}>
