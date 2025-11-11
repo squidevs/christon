@@ -1,0 +1,159 @@
+[
+  {
+    "id": "orar",
+    "name": "Orar",
+    "description": "Conectar-se com Deus em oração",
+    "icon": "BsHeart",
+    "effects": {
+      "spiritPoints": 3,
+      "wisdom": 5,
+      "armorRepair": {
+        "helmetOfSalvation": 2
+      },
+      "blessing": "paz_interior"
+    },
+    "cooldown": 3600000,
+    "requirements": [],
+    "verse": {
+      "text": "Orem sem cessar",
+      "reference": "1 Tessalonicenses 5:17"
+    }
+  },
+  {
+    "id": "confessar",
+    "name": "Confessar",
+    "description": "Reconhecer pecados e buscar perdão",
+    "icon": "BsEye",
+    "effects": {
+      "sinReduction": 1,
+      "wisdom": 10,
+      "armorRepair": {
+        "breastplateOfRighteousness": 5
+      },
+      "purification": true
+    },
+    "cooldown": 86400000,
+    "requirements": ["sin > 0"],
+    "verse": {
+      "text": "Se confessarmos os nossos pecados, ele é fiel e justo para perdoar",
+      "reference": "1 João 1:9"
+    }
+  },
+  {
+    "id": "arrepender",
+    "name": "Arrepender",
+    "description": "Mudança genuína de coração e mente",
+    "icon": "BsArrowCounterclockwise",
+    "effects": {
+      "sinReduction": "all",
+      "wisdom": 25,
+      "armorRepair": {
+        "all": 10
+      },
+      "rebirth": true
+    },
+    "cooldown": 2592000000,
+    "requirements": ["sin >= 5"],
+    "verse": {
+      "text": "Arrependam-se, pois, e voltem-se para Deus",
+      "reference": "Atos 3:19"
+    }
+  },
+  {
+    "id": "justificar",
+    "name": "Justificar", 
+    "description": "Corrigir falhas passadas com ações justas",
+    "icon": "MdWaterDrop",
+    "effects": {
+      "wisdom": 15,
+      "missionRecovery": 0.5,
+      "armorRepair": {
+        "beltOfTruth": 3
+      }
+    },
+    "cooldown": 43200000,
+    "requirements": ["failedMission"],
+    "verse": {
+      "text": "Justificados gratuitamente pela sua graça",
+      "reference": "Romanos 3:24"
+    }
+  },
+  {
+    "id": "glorificar",
+    "name": "Glorificar",
+    "description": "Dar glória a Deus e compartilhar bênçãos",
+    "icon": "BsStars",
+    "effects": {
+      "wisdom": 20,
+      "communityPoints": 10,
+      "streakProtection": 1,
+      "blessing": "gloria_divina"
+    },
+    "cooldown": 21600000,
+    "requirements": ["completedMission"],
+    "verse": {
+      "text": "Portanto, glorifiquem a Deus em seu corpo",
+      "reference": "1 Coríntios 6:20"
+    }
+  },
+  {
+    "id": "perdoar",
+    "name": "Perdoar",
+    "description": "Perdoar ofensas e liberar rancor",
+    "icon": "BsShield",
+    "effects": {
+      "wisdom": 30,
+      "sinReduction": 2,
+      "armorRepair": {
+        "shieldOfFaith": 5
+      },
+      "healing": "emocional"
+    },
+    "cooldown": 86400000,
+    "requirements": [],
+    "verse": {
+      "text": "Perdoem, e serão perdoados",
+      "reference": "Lucas 6:37"
+    }
+  },
+  {
+    "id": "adorar",
+    "name": "Adorar",
+    "description": "Adoração sincera e louvor a Deus",
+    "icon": "BsPeace",
+    "effects": {
+      "wisdom": 8,
+      "spiritPoints": 5,
+      "streakMaintenance": true,
+      "armorRepair": {
+        "cloakOfWisdom": 3
+      }
+    },
+    "cooldown": 14400000,
+    "requirements": [],
+    "verse": {
+      "text": "Adorem o Senhor na beleza da sua santidade",
+      "reference": "Salmos 96:9"
+    }
+  },
+  {
+    "id": "santificar",
+    "name": "Santificar",
+    "description": "Separar-se para uso sagrado de Deus",
+    "icon": "BsBuilding",
+    "effects": {
+      "wisdom": 50,
+      "achievementUnlock": true,
+      "armorRepair": {
+        "all": 5
+      },
+      "consecration": true
+    },
+    "cooldown": 604800000,
+    "requirements": ["spiritLevel >= 5"],
+    "verse": {
+      "text": "Santifiquem-se, pois amanhã o Senhor fará maravilhas",
+      "reference": "Josué 3:5"
+    }
+  }
+]

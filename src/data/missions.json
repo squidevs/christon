@@ -1,0 +1,106 @@
+[
+  {
+    "id": "nao_mentir_001",
+    "name": "Não mentir",
+    "description": "Passe o dia sem contar nenhuma mentira",
+    "type": "acao_diaria",
+    "category": "verdade",
+    "duration": 86400000,
+    "startTime": "2025-11-10T06:00:00Z",
+    "endTime": "2025-11-11T06:00:00Z",
+    "reward": {
+      "wisdom": 25,
+      "spiritPoints": 5,
+      "items": []
+    },
+    "penalty": {
+      "sin": 1,
+      "wisdomLoss": 10
+    },
+    "status": "ativa",
+    "progress": 0.65,
+    "armorEffect": "beltOfTruth",
+    "verse": {
+      "text": "Portanto, deixem a mentira e falem a verdade cada um ao seu próximo",
+      "reference": "Efésios 4:25"
+    }
+  },
+  {
+    "id": "nao_fofocar_001", 
+    "name": "Não fofocar",
+    "description": "Não faça aparência do mal, não fofoque",
+    "type": "batalha_espiritual",
+    "category": "sabedoria",
+    "duration": 604800000,
+    "startTime": "2025-11-09T00:00:00Z",
+    "endTime": "2025-11-16T00:00:00Z",
+    "reward": {
+      "wisdom": 50,
+      "spiritPoints": 15,
+      "items": ["oleo_uncao"]
+    },
+    "penalty": {
+      "sin": 3,
+      "wisdomLoss": 25
+    },
+    "status": "ativa",
+    "progress": 0.43,
+    "armorEffect": "breastplateOfRighteousness",
+    "verse": {
+      "text": "Quem muito fala, muito erra; quem é sábio refreia a língua",
+      "reference": "Provérbios 10:19"
+    }
+  },
+  {
+    "id": "declarar_amor_001",
+    "name": "Declarar amor",
+    "description": "Diga que ama seu cônjuge",
+    "type": "casal",
+    "category": "amor",
+    "duration": 86400000,
+    "startTime": "2025-11-10T06:00:00Z", 
+    "endTime": "2025-11-11T06:00:00Z",
+    "reward": {
+      "wisdom": 35,
+      "spiritPoints": 10,
+      "items": ["agua_vida"]
+    },
+    "penalty": {
+      "sin": 2,
+      "wisdomLoss": 15
+    },
+    "status": "ativa",
+    "progress": 0,
+    "armorEffect": "cloakOfWisdom",
+    "verse": {
+      "text": "Acima de tudo, revistam-se do amor, que é o elo perfeito",
+      "reference": "Colossenses 3:14"
+    }
+  },
+  {
+    "id": "estudar_biblia_001",
+    "name": "Estudar bíblia",
+    "description": "Afie a espada de Deus",
+    "type": "guerra_santa",
+    "category": "conhecimento",
+    "duration": 2592000000,
+    "startTime": "2025-11-01T00:00:00Z",
+    "endTime": "2025-12-01T00:00:00Z",
+    "reward": {
+      "wisdom": 100,
+      "spiritPoints": 25,
+      "items": ["biblia_sagrada"]
+    },
+    "penalty": {
+      "sin": 5,
+      "wisdomLoss": 50
+    },
+    "status": "completa",
+    "progress": 1,
+    "armorEffect": "swordOfSpirit",
+    "verse": {
+      "text": "Toda Escritura é inspirada por Deus e útil para o ensino",
+      "reference": "2 Timóteo 3:16"
+    }
+  }
+]

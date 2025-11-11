@@ -1,0 +1,132 @@
+{
+  "xpSystem": {
+    "levels": [
+      {
+        "level": 1,
+        "title": "Tolo",
+        "requiredXp": 0,
+        "color": "#CFCFCF"
+      },
+      {
+        "level": 2,
+        "title": "Iniciante", 
+        "requiredXp": 100,
+        "color": "#4979C8"
+      },
+      {
+        "level": 3,
+        "title": "Prudente",
+        "requiredXp": 300,
+        "color": "#3DA35D"
+      },
+      {
+        "level": 4,
+        "title": "Justo",
+        "requiredXp": 600,
+        "color": "#E0B142"
+      },
+      {
+        "level": 5,
+        "title": "Fiel",
+        "requiredXp": 1000,
+        "color": "#C44536"
+      },
+      {
+        "level": 6,
+        "title": "Discernido",
+        "requiredXp": 1500,
+        "color": "#8B5CF6"
+      },
+      {
+        "level": 7,
+        "title": "Sábio",
+        "requiredXp": 2500,
+        "color": "#F59E0B"
+      }
+    ]
+  },
+  "missions": {
+    "defaultDuration": {
+      "acao_diaria": 86400000,
+      "batalha_espiritual": 604800000, 
+      "guerra_santa": 2592000000,
+      "casal": 86400000
+    },
+    "penalties": {
+      "baseSin": 1,
+      "baseWisdomLoss": 10,
+      "multiplierByLevel": 1.5
+    },
+    "rewards": {
+      "baseWisdom": 25,
+      "baseSpiritPoints": 5,
+      "streakMultiplier": 0.05
+    }
+  },
+  "streakSystem": {
+    "protectionItems": ["corpo_cristo"],
+    "maxProtectionDays": 3,
+    "bonusMultiplier": 0.05,
+    "penaltyOnBreak": {
+      "wisdomLoss": 0.1,
+      "spiritLoss": 0.2
+    }
+  },
+  "armorSystem": {
+    "maxIntegrity": 100,
+    "repairRates": {
+      "low": 1,
+      "medium": 3, 
+      "high": 5,
+      "full": 10
+    },
+    "degradationRate": 0.5
+  },
+  "items": {
+    "rarityColors": {
+      "comum": "#9CA3AF",
+      "raro": "#3B82F6", 
+      "epico": "#8B5CF6",
+      "legendario": "#F59E0B",
+      "divino": "#EF4444",
+      "sagrado": "#10B981"
+    },
+    "stackLimits": {
+      "consumivel": 99,
+      "equipavel": 1,
+      "boost": 10
+    }
+  },
+  "timing": {
+    "actionCooldowns": {
+      "orar": 3600000,
+      "confessar": 86400000,
+      "arrepender": 2592000000,
+      "justificar": 43200000,
+      "glorificar": 21600000,
+      "perdoar": 86400000,
+      "adorar": 14400000,
+      "santificar": 604800000
+    },
+    "notifications": {
+      "missionExpiring": 3600000,
+      "streakReminder": 21600000,
+      "dailyVerse": "06:00"
+    }
+  },
+  "api": {
+    "bibleApi": "https://www.abibliadigital.com.br/api",
+    "quotesApi": "https://zenquotes.io/api/today",
+    "backupApi": "https://bible-api.com"
+  },
+  "gameBalance": {
+    "maxDailySin": 3,
+    "maxTotalSin": 10,
+    "wisdomDecayRate": 0.01,
+    "experienceMultipliers": {
+      "weekend": 1.2,
+      "holyDays": 1.5,
+      "fasting": 2.0
+    }
+  }
+}

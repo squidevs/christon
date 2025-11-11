@@ -1,0 +1,151 @@
+[
+  {
+    "id": "biblia_sagrada",
+    "name": "Bíblia Sagrada",
+    "description": "A Palavra de Deus que ilumina o caminho",
+    "type": "equipavel",
+    "rarity": "sagrado",
+    "icon": "BsBook",
+    "quantity": 1,
+    "effects": {
+      "wisdomBonus": 5,
+      "armorStrength": {
+        "swordOfSpirit": 20
+      }
+    },
+    "verse": {
+      "text": "Lâmpada para os meus pés é a tua palavra",
+      "reference": "Salmos 119:105"
+    }
+  },
+  {
+    "id": "oleo_uncao",
+    "name": "Óleo de unção",
+    "description": "Óleo consagrado para cura espiritual",
+    "type": "consumivel",
+    "rarity": "raro",
+    "icon": "MdOilBarrel",
+    "quantity": 4,
+    "effects": {
+      "spiritRestore": 10,
+      "armorRepair": {
+        "all": 5
+      }
+    },
+    "verse": {
+      "text": "Você ungiu a minha cabeça com óleo",
+      "reference": "Salmos 23:5"
+    }
+  },
+  {
+    "id": "calice_sagrado",
+    "name": "Cálice sagrado",
+    "description": "Cálice da Nova Aliança",
+    "type": "consumivel",
+    "rarity": "legendario",
+    "icon": "BsCup",
+    "quantity": 1,
+    "effects": {
+      "sinReduction": 1,
+      "wisdomBonus": 15,
+      "blessing": "comunhao"
+    },
+    "verse": {
+      "text": "Este cálice é a nova aliança no meu sangue",
+      "reference": "Lucas 22:20"
+    }
+  },
+  {
+    "id": "agua_vida",
+    "name": "Água da vida",
+    "description": "Água viva que sacia para sempre",
+    "type": "consumivel", 
+    "rarity": "raro",
+    "icon": "BsDroplet",
+    "quantity": 1,
+    "effects": {
+      "experienceMultiplier": 2,
+      "duration": 86400000,
+      "purification": true
+    },
+    "verse": {
+      "text": "Quem beber da água que eu lhe der nunca mais terá sede",
+      "reference": "João 4:14"
+    }
+  },
+  {
+    "id": "sangue_cristo",
+    "name": "Sangue de Cristo",
+    "description": "O sangue que purifica de todo pecado",
+    "type": "consumivel",
+    "rarity": "divino",
+    "icon": "MdLocalBar",
+    "quantity": 1,
+    "effects": {
+      "sinReduction": "all",
+      "curseRemoval": true,
+      "armorRepair": {
+        "all": 20
+      }
+    },
+    "verse": {
+      "text": "O sangue de Jesus nos purifica de todo pecado",
+      "reference": "1 João 1:7"
+    }
+  },
+  {
+    "id": "corpo_cristo",
+    "name": "Corpo de Cristo",
+    "description": "O pão da vida eterna",
+    "type": "consumivel",
+    "rarity": "divino", 
+    "icon": "MdBakeryDining",
+    "quantity": 2,
+    "effects": {
+      "streakProtection": 1,
+      "wisdomBonus": 25,
+      "lifeEternal": true
+    },
+    "verse": {
+      "text": "Eu sou o pão da vida",
+      "reference": "João 6:35"
+    }
+  },
+  {
+    "id": "espada_espirito",
+    "name": "Espada do Espírito",
+    "description": "A Palavra de Deus é viva e eficaz",
+    "type": "equipavel",
+    "rarity": "epico",
+    "icon": "BsLightning",
+    "quantity": 1,
+    "effects": {
+      "combatPower": 25,
+      "armorStrength": {
+        "swordOfSpirit": 50
+      },
+      "truthRevealer": true
+    },
+    "verse": {
+      "text": "A espada do Espírito, que é a palavra de Deus",
+      "reference": "Efésios 6:17"
+    }
+  },
+  {
+    "id": "multiplicador_experiencia",
+    "name": "2x",
+    "description": "Multiplica experiência por período limitado",
+    "type": "boost",
+    "rarity": "comum",
+    "icon": "2x",
+    "quantity": 1,
+    "effects": {
+      "experienceMultiplier": 2,
+      "duration": 3600000
+    },
+    "verse": {
+      "text": "Deus dá graça aos humildes",
+      "reference": "Tiago 4:6"
+    }
+  }
+]
