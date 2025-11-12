@@ -86,12 +86,14 @@ const abandonMission = (mission: any) => {
 };
 
 const getTimeRemaining = (endTime?: number | Date) => {
-  if (!endTime) return '00:00';
+  if (!endTime) return '00:00:00:00';
   const ts = typeof endTime === 'number' ? endTime : endTime.getTime();
   const diff = Math.max(0, ts - Date.now());
-  const mins = Math.floor(diff / 60000);
+  const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+  const hours = Math.floor((diff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+  const mins = Math.floor((diff % (60 * 60 * 1000)) / 60000);
   const secs = Math.floor((diff % 60000) / 1000);
-  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  return `${String(days).padStart(2, '0')}:${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 };
 
 const computeEndTime = (schedule: string) => {

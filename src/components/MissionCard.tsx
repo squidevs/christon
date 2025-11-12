@@ -56,31 +56,20 @@ const MissionCard: React.FC<MissionCardProps> = ({
   useEffect(() => {
     const updateTimer = () => {
       if (!mission.dataExpiracao) return;
-      
       const now = Date.now();
       const diff = mission.dataExpiracao - now;
-      
       if (diff <= 0) {
         setTimeRemaining('Expirada');
         return;
       }
-      
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      
-      if (days > 0) {
-        setTimeRemaining(`${days}d ${hours}h`);
-      } else if (hours > 0) {
-        setTimeRemaining(`${hours}h ${minutes}m`);
-      } else {
-        setTimeRemaining(`${minutes}m`);
-      }
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  setTimeRemaining(`${String(days).padStart(2, '0')}:${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
     };
-    
     updateTimer();
-    const interval = setInterval(updateTimer, 60000); // Atualiza a cada minuto
-    
+    const interval = setInterval(updateTimer, 1000); // Atualiza a cada segundo
     return () => clearInterval(interval);
   }, [mission.dataExpiracao]);
 
@@ -120,9 +109,9 @@ const MissionCard: React.FC<MissionCardProps> = ({
   const renderActionCard = () => (
     <>
       {/* Timer no canto superior direito */}
-      <div className="absolute top-3 right-3 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-200">
+  <div className="absolute top-3 right-3 flex items-center gap-1 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-200 z-20">
         <Icons.Clock className="w-4 h-4 text-spiritual" />
-        <span className="font-bold text-sm text-spiritual">{timeRemaining}</span>
+        <span className="font-bold text-spiritual" style={{ fontSize: '7px' }}>{timeRemaining}</span>
       </div>
 
       <div className="flex items-start gap-4 mb-4">
@@ -284,10 +273,10 @@ const MissionCard: React.FC<MissionCardProps> = ({
   // Renderizar card de QUIZ
   const renderQuizCard = () => (
     <>
-      {/* Timer no canto superior direito */}
-      <div className="absolute top-3 right-3 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-200">
+      {/* Timer no canto superior esquerdo */}
+  <div className="absolute top-3 right-3 flex items-center gap-1 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-200 z-20">
         <Icons.Clock className="w-4 h-4 text-spiritual" />
-        <span className="font-bold text-sm text-spiritual">{timeRemaining}</span>
+        <span className="font-bold text-spiritual" style={{ fontSize: '7px' }}>{timeRemaining}</span>
       </div>
 
       <div className="flex items-start gap-4 mb-4">
@@ -480,10 +469,10 @@ const MissionCard: React.FC<MissionCardProps> = ({
   // Renderizar card de CASAL
   const renderCoupleCard = () => (
     <>
-      {/* Timer no canto superior direito */}
-      <div className="absolute top-3 right-3 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-200">
+      {/* Timer no canto superior esquerdo */}
+  <div className="absolute top-3 right-3 flex items-center gap-1 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-200 z-20">
         <Icons.Clock className="w-4 h-4 text-spiritual" />
-        <span className="font-bold text-sm text-spiritual">{timeRemaining}</span>
+        <span className="font-bold text-spiritual" style={{ fontSize: '7px' }}>{timeRemaining}</span>
       </div>
 
       <div className="flex items-start gap-4 mb-4">
@@ -644,10 +633,10 @@ const MissionCard: React.FC<MissionCardProps> = ({
 
     return (
       <>
-        {/* Timer no canto superior direito */}
-        <div className="absolute top-3 right-3 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-200">
+        {/* Timer no canto superior esquerdo */}
+  <div className="absolute top-3 right-3 flex items-center gap-1 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-200 z-20">
           <Icons.Clock className="w-4 h-4 text-spiritual" />
-          <span className="font-bold text-sm text-spiritual">{timeRemaining}</span>
+          <span className="font-bold text-spiritual" style={{ fontSize: '7px' }}>{timeRemaining}</span>
         </div>
 
         <div className="flex items-start gap-4 mb-4">
