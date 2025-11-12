@@ -194,9 +194,9 @@ const MissionsPageSimple: React.FC<MissionsPageSimpleProps> = ({ userStatus }) =
         {/* Conteúdo principal */}
         <div className="flex items-center gap-4">
           {/* Ícone da missão com multiplicador */}
-          <div className="relative">
+            <div className="relative">
             <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
-              {mission.icon}
+              {mission.icon ?? '📋'}
             </div>
             <div className="absolute -top-1 -right-1 bg-gray-600 text-white text-xs px-1 py-0.5 rounded font-bold">
               2x
@@ -209,8 +209,8 @@ const MissionsPageSimple: React.FC<MissionsPageSimpleProps> = ({ userStatus }) =
             <p className="text-sm text-gray-600 mb-2">{mission.description}</p>
             
             {/* Recompensas */}
-            <div className="flex gap-4 text-sm text-gray-500">
-              <span>{mission.sinPenalty.toString().padStart(2, '0')} Pecado</span>
+              <div className="flex gap-4 text-sm text-gray-500">
+              <span>{String(mission.sinPenalty ?? 0).padStart(2, '0')} Pecado</span>
               <span>{mission.wisdomReward}x Sabedoria</span>
             </div>
           </div>

@@ -62,7 +62,6 @@ const Header: React.FC<HeaderProps> = ({
       <div className="p-3 sm:p-4">
         {/* Título HUD */}
         <div className="flex flex-wrap gap-2 mb-2 text-[11px] sm:text-xs font-semibold text-gray-300">
-          <span className="bg-gray-800/60 px-2 py-0.5 rounded">HUD Espiritual</span>
         </div>
         {/* Linha Principal */}
         <div className="flex items-center justify-between gap-4">
@@ -218,59 +217,57 @@ const Header: React.FC<HeaderProps> = ({
 
         {/* Linha de Slots de Itens Equipados + Stats */}
         <div className="mt-3 border-t border-gray-700 pt-3">
-          {/* Título dos slots de inventário */}
-          <div className="flex items-center justify-center mb-1">
-            <span className="text-[10px] sm:text-xs bg-gray-800/60 px-2 py-0.5 rounded">Slots de Inventário</span>
-          </div>
-          <div className="flex items-center justify-center gap-1 sm:gap-1.5">
+          <div className="flex items-center justify-start gap-1 sm:gap-1.5">
             {/* Slots de itens */}
-            <div className="flex flex-col items-center gap-0.5">
-              <span className="text-[9px] sm:text-[10px] text-wisdom">Permanentes</span>
+            <div className="flex flex-col items-start gap-0.5">
+              <div className='flex flex-eow itens-between gap-12'>
+              <span className="text-[8px] sm:text-[10px] text-wisdom">Permanentes</span>
+              <span className="text-[8px] sm:text-[10px] text-wisdom">Consumíveis</span>
+
+              </div>
               <div><EquippedItemsSlots compact={true} /></div>
-              <span className="text-[9px] sm:text-[10px] text-victory">Consumíveis</span>
             </div>
-            {/* Separador */}
-            <div className="w-px h-8 sm:h-10 bg-gray-600" />
+            <div className="w-px h-10 sm:h-10 bg-gray-600 self-end" />
             {/* Stats à direita dos slots - mesma altura */}
-            <div className="flex flex-col items-center gap-0.5">
-              <span className="text-[10px] sm:text-xs bg-gray-800/60 px-2 py-0.5 rounded">Status</span>
+            <div className="flex flex-col items-start gap-0.5">
+              <span className="text-[8px] sm:text-[10px] text-wisdom">Status</span>
               <div className="flex items-center gap-1 sm:gap-1.5">
                 {/* Sabedoria */}
                 <div className="flex items-center justify-center gap-1 bg-wisdom/30 rounded-lg border border-wisdom/50 h-10 w-10 sm:h-12 sm:w-12">
                   <div className="flex flex-col items-center">
-                    <Brain size={14} className="sm:w-4 sm:h-4 text-wisdom" />
-                    <span className="text-wisdom font-bold text-[9px] sm:text-[10px]">{wisdom}</span>
+                    <Brain size={12} className="sm:w-4 sm:h-4 text-wisdom" />
+                    <span className="text-wisdom font-bold text-[8px] sm:text-[10px]">{wisdom}</span>
+                    <span className="text-wisdom font-bold text-[6px] sm:text-[10px]">sabedoria</span>
                   </div>
                 </div>
                 {/* Ofensiva (Streak) */}
                 <div className="flex items-center justify-center gap-1 bg-victory/30 rounded-lg border border-victory/50 h-10 w-10 sm:h-12 sm:w-12">
                   <div className="flex flex-col items-center">
-                    <Flame size={14} className="sm:w-4 sm:h-4 text-victory" />
-                    <span className="text-victory font-bold text-[9px] sm:text-[10px]">{streak}</span>
+                    <Flame size={12} className="sm:w-4 sm:h-4 text-victory" />
+                    <span className="text-victory font-bold text-[8px] sm:text-[10px]">{streak}</span>
+                    <span className="text-victory font-bold text-[6px] sm:text-[10px]">ofensiva</span>
                   </div>
                 </div>
                 {/* Pecado */}
                 {sin > 0 && (
                   <div className="flex items-center justify-center gap-1 bg-sin/30 rounded-lg border border-sin/50 h-10 w-10 sm:h-12 sm:w-12">
                     <div className="flex flex-col items-center">
-                      <AlertTriangle size={14} className="sm:w-4 sm:h-4 text-sin" />
-                      <span className="text-sin font-bold text-[9px] sm:text-[10px]">{sin}</span>
+                      <AlertTriangle size={12} className="sm:w-4 sm:h-4 text-sin" />
+                      <span className="text-sin font-bold text-[8px] sm:text-[8px]">{sin}</span>
+                      {sin > 0 && <span className="text-[6px] sm:text-[8px] text-sin">Pecado</span>}
+
                     </div>
                   </div>
                 )}
               </div>
-              <span className="text-[9px] sm:text-[10px] text-wisdom">Sabedoria</span>
-              <span className="text-[9px] sm:text-[10px] text-victory">Ofensiva</span>
-              {sin > 0 && <span className="text-[9px] sm:text-[10px] text-sin">Pecado</span>}
             </div>
           </div>
         </div>
 
         {/* Linha de Slots da Armadura de Deus */}
         {armorPieces && (
-          <div className="mt-2 pt-2 border-t border-gray-700">
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-[10px] sm:text-xs bg-gray-800/60 px-2 py-0.5 rounded">Armadura de Deus <span className="text-spiritual">(Efésios 6:10-18)</span></span>
+          <div className="mt-1 pt-2 border-t border-gray-700">
+            <div className="flex flex-col items-start gap-1">
               <div className="flex items-center justify-center gap-1 sm:gap-1.5 overflow-x-auto pb-1">
                 {Object.entries(armorPieces).map(([key, piece]) => {
                   const getArmorIcon = () => {
@@ -315,6 +312,7 @@ const Header: React.FC<HeaderProps> = ({
                   );
                 })}
               </div>
+                <span className="text-[8px] sm:text-xs rounded">Armadura de Deus <span className="text-spiritual">(Efésios 6:10-18)</span></span>
             </div>
           </div>
         )}

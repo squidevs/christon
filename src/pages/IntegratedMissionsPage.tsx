@@ -364,12 +364,12 @@ const MissionsPage: React.FC<MissionsPageProps> = ({ userStatus }) => {
                       <div className="mb-3">
                         <div className="flex justify-between text-sm text-gray-600 mb-1">
                           <span>Progresso</span>
-                          <span>{Math.round(mission.progress * 100)}%</span>
+                          <span>{Math.round((mission.progress ?? 0) * 100)}%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div 
                             className="bg-spiritual h-2 rounded-full transition-all duration-300"
-                            style={{ width: `${mission.progress * 100}%` }}
+                            style={{ width: `${(mission.progress ?? 0) * 100}%` }}
                           />
                         </div>
                       </div>

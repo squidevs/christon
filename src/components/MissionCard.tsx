@@ -125,7 +125,7 @@ const MissionCard: React.FC<MissionCardProps> = ({
         <span className="font-bold text-sm text-spiritual">{timeRemaining}</span>
       </div>
 
-      <div className="flex items-start gap-4 mb-4 pr-24">
+      <div className="flex items-start gap-4 mb-4">
         <div 
           className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
           style={{ background: mission.elementos.background }}
@@ -290,7 +290,7 @@ const MissionCard: React.FC<MissionCardProps> = ({
         <span className="font-bold text-sm text-spiritual">{timeRemaining}</span>
       </div>
 
-      <div className="flex items-start gap-4 mb-4 pr-24">
+      <div className="flex items-start gap-4 mb-4">
         <div 
           className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
           style={{ background: mission.elementos.background }}
@@ -486,7 +486,7 @@ const MissionCard: React.FC<MissionCardProps> = ({
         <span className="font-bold text-sm text-spiritual">{timeRemaining}</span>
       </div>
 
-      <div className="flex items-start gap-4 mb-4 pr-24">
+      <div className="flex items-start gap-4 mb-4">
         <div 
           className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
           style={{ background: mission.elementos.background }}
@@ -650,7 +650,7 @@ const MissionCard: React.FC<MissionCardProps> = ({
           <span className="font-bold text-sm text-spiritual">{timeRemaining}</span>
         </div>
 
-        <div className="flex items-start gap-4 mb-4 pr-24">
+        <div className="flex items-start gap-4 mb-4">
           <div 
             className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
             style={{ background: mission.elementos.background }}

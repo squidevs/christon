@@ -295,7 +295,7 @@ const MissionsPage: React.FC = () => {
               
               <div className="flex flex-col items-end gap-2">
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(mission.difficulty)}`}>
-                  {mission.difficulty.charAt(0).toUpperCase() + mission.difficulty.slice(1)}
+                  {((mission.difficulty ?? 'facil') as string).charAt(0).toUpperCase() + ((mission.difficulty ?? 'facil') as string).slice(1)}
                 </span>
                 {state && state.status === 'in_progress' && (
                   <span className="text-xs text-gray-500">Em progresso • {missionsManager.getTimeRemaining(state.endTime)}</span>
