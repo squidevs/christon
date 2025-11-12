@@ -83,8 +83,14 @@ const QuizInterface: React.FC<QuizInterfaceProps> = ({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-2 z-[999]">
+      <div
+        className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] sm:max-h-[70vh] overflow-y-auto flex flex-col"
+        style={{
+          maxHeight: '90vh',
+          height: '100%',
+        }}
+      >
         {/* Header */}
         <div className="sticky top-0 bg-spiritual text-white p-4 rounded-t-xl">
           <h2 className="text-xl font-bold mb-2">{missionTitle}</h2>
@@ -140,7 +146,7 @@ const QuizInterface: React.FC<QuizInterfaceProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-gray-50 p-4 rounded-b-xl flex justify-between gap-3">
+  <div className="sticky bottom-0 bg-gray-50 p-4 rounded-b-xl flex justify-between gap-3 z-[60]" style={{marginBottom: 'env(safe-area-inset-bottom, 56px)'}}>
           <button
             onClick={onCancel}
             className="px-6 py-2 text-gray-600 hover:text-gray-800 transition-colors"
