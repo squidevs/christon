@@ -233,25 +233,25 @@ const Header: React.FC<HeaderProps> = ({
               <span className="text-[8px] sm:text-[10px] text-wisdom">Status</span>
               <div className="flex items-center gap-1 sm:gap-1.5">
                 {/* Sabedoria */}
-                <div className="flex items-center justify-center gap-1 bg-wisdom/30 rounded-lg border border-wisdom/50 h-10 w-10 sm:h-12 sm:w-12">
+                <div className="fflex items-center justify-center gap-1 bg-wisdom/30 rounded-lg border border-wisdom/50 h-9 w-9 sm:h-11 sm:w-11 relative">
                   <div className="flex flex-col items-center">
                     <Brain size={12} className="sm:w-4 sm:h-4 text-wisdom" />
-                    <span className="text-wisdom font-bold text-[8px] sm:text-[10px]">{wisdom}</span>
-                    <span className="text-wisdom font-bold text-[6px] sm:text-[10px]">sabedoria</span>
+                    <span className="text-wisdom font-bold text-[6px] sm:text-[8px]">{wisdom}</span>
+                    <span className="text-wisdom font-bold text-[6px] sm:text-[6px]">sabedoria</span>
                   </div>
                 </div>
                 {/* Ofensiva (Streak) */}
-                <div className="flex items-center justify-center gap-1 bg-victory/30 rounded-lg border border-victory/50 h-10 w-10 sm:h-12 sm:w-12">
-                  <div className="flex flex-col items-center">
+                <div className="flex items-center justify-center gap-1 bg-victory/30 rounded-lg border border-victory/50 h-9 w-9 sm:h-11 sm:w-11 relative">
+                  <div className="flex flex-col items-center w-full h-full">
                     <Flame size={12} className="sm:w-4 sm:h-4 text-victory" />
-                    <span className="text-victory font-bold text-[8px] sm:text-[10px]">{streak}</span>
-                    <span className="text-victory font-bold text-[6px] sm:text-[10px]">ofensiva</span>
+                    <span className="text-victory font-bold text-[8px] sm:text-[8px]">{streak}</span>
+                    <span className="text-victory font-bold text-[6px] sm:text-[6px]">ofensiva</span>
                   </div>
                 </div>
                 {/* Pecado */}
                 {sin > 0 && (
-                  <div className="flex items-center justify-center gap-1 bg-sin/30 rounded-lg border border-sin/50 h-10 w-10 sm:h-12 sm:w-12">
-                    <div className="flex flex-col items-center">
+                  <div className="flex items-center justify-center gap-1 bg-sin/30 rounded-lg border border-sin/50 h-9 w-9 sm:h-11 sm:w-11 relative">
+                    <div className="flex flex-col items-center w-full h-full">
                       <AlertTriangle size={12} className="sm:w-4 sm:h-4 text-sin" />
                       <span className="text-sin font-bold text-[8px] sm:text-[8px]">{sin}</span>
                       {sin > 0 && <span className="text-[6px] sm:text-[8px] text-sin">Pecado</span>}

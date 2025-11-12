@@ -171,7 +171,7 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
           <div className={`grid grid-cols-2 gap-4 ${!canStudy ? 'pointer-events-none opacity-60' : ''}`}>
             {/* Coluna Antigo Testamento */}
               <div>
-                <h2 className="text-lg font-bold mb-4 text-spiritual">Antigo Testamento</h2>
+                <h2 className="font-bold mb-4 text-spiritual">Antigo Testamento</h2>
                   <div className="flex flex-col gap-4">
                 {oldBooks.map((book: any) => {
                   const progress = getBookProgress(book.id, book.chapters);
@@ -211,7 +211,7 @@ export default function StudiesPage({ onBack }: StudiesPageProps) {
             </div>
             {/* Coluna Novo Testamento */}
               <div>
-                <h2 className="text-lg font-bold mb-4 text-victory">Novo Testamento</h2>
+                <h2 className="font-bold mb-4 text-victory">Novo Testamento</h2>
                   <div className="flex flex-col gap-4">
                 {newBooks.map((book: any) => {
                   const progress = getBookProgress(book.id, book.chapters);
