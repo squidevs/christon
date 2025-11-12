@@ -7,6 +7,192 @@ const oneMonth = 30 * oneDay;
 
 export const missions: Mission[] = [
   // MISSÕES SIMPLES PARA DESBLOQUEAR ARMADURA - LEITURA DE VERSÍCULOS
+    {
+    id: 106,
+    categoria: 'quiz',
+    tags: ['palavra', 'biblia', 'armadura', 'efesios'],
+    titulo: 'Espada do Espírito',
+    descricao: 'Estude Efésios 6:17b - "E a espada do Espírito, que é a palavra de Deus". Aprenda sobre o poder da Palavra de Deus como arma ofensiva.',
+    tipoMissao: 'diaria',
+    nivelDificuldade: 'comum',
+    tempoRestante: '24h',
+    status: 'ativa',
+    dataInicio: now,
+    dataExpiracao: now + oneDay,
+    restricoes: {
+      somenteCasado: false,
+      somenteBatizado: false,
+      requerSalvo: false
+    },
+    elementos: {
+      icone: 'Sword',
+      corTema: '#C0C0C0',
+      background: 'linear-gradient(135deg, #C0C0C0 0%, #808080 100%)'
+    },
+    interacoes: {
+      botoes: {
+        iniciar: true,
+        desistir: true,
+        concluir: false
+      },
+      progresso: {
+        porcentagem: 0,
+        checkboxes: []
+      },
+      quiz: {
+        ativo: true,
+        perguntas: [
+          'Por que a Palavra de Deus é uma espada?',
+          'Como Jesus usou a espada do Espírito?',
+          'Como devemos usar esta arma?'
+        ],
+        respostas: [],
+        corretas: []
+      }
+    },
+    recompensas: {
+      xpSabedoria: 50,
+      moedasFe: 20,
+      armadura: {
+        capacete: 0,
+        espada: 1,
+        escudo: 0,
+        couraca: 0,
+        sandalias: 0,
+        oracao: 0
+      },
+      consumiveis: []
+    },
+    penalidades: {
+      descricao: '+1 Pecado por desistir.',
+      efeitos: {
+        pecado: 1,
+        perdaXp: 10
+      }
+    },
+    quizDados: {
+      ativo: true,
+      questoes: [
+        {
+          id: 1,
+          pergunta: 'Por que a Palavra de Deus é comparada a uma espada?',
+          opcoes: [
+            'É nossa única arma ofensiva, penetra e corta verdades espirituais',
+            'Porque machuca as pessoas',
+            'Porque é afiada',
+            'Porque é de metal'
+          ],
+          correta: 'É nossa única arma ofensiva, penetra e corta verdades espirituais'
+        },
+        {
+          id: 2,
+          pergunta: 'Como Jesus usou a espada do Espírito contra Satanás?',
+          opcoes: [
+            'Citando as Escrituras durante a tentação no deserto',
+            'Com uma espada literal',
+            'Apenas orando',
+            'Ignorando o diabo'
+          ],
+          correta: 'Citando as Escrituras durante a tentação no deserto'
+        },
+        {
+          id: 3,
+          pergunta: 'Como devemos usar a espada do Espírito?',
+          opcoes: [
+            'Conhecendo, memorizando e aplicando a Palavra na batalha espiritual',
+            'Apenas lendo a Bíblia aos domingos',
+            'Carregando uma Bíblia',
+            'Decorando versículos sem entender'
+          ],
+          correta: 'Conhecendo, memorizando e aplicando a Palavra na batalha espiritual'
+        }
+      ],
+      acertos: 0,
+      erros: 0
+    },
+    metricaEspiritual: {
+      sabedoria: 50,
+      fe: 20,
+      pecado: 0,
+      espirito: 10,
+      salvacao: 5
+    }
+  },
+  {
+    id: 107,
+    categoria: 'acao',
+    tags: ['biblia', 'leitura', 'estudo'],
+    titulo: 'Adquirir a Bíblia Sagrada',
+    descricao: 'Comprometa-se a ler a Bíblia regularmente. Complete esta missão para receber a Bíblia Sagrada e desbloquear a área de Estudos.',
+    tipoMissao: 'diaria',
+    nivelDificuldade: 'comum',
+    tempoRestante: '24h',
+    status: 'ativa',
+    dataInicio: now,
+    dataExpiracao: now + oneDay,
+    restricoes: {
+      somenteCasado: false,
+      somenteBatizado: false,
+      requerSalvo: false
+    },
+    elementos: {
+      icone: 'BookOpen',
+      corTema: '#8B4513',
+      background: 'linear-gradient(135deg, #8B4513 0%, #A0522D 100%)'
+    },
+    interacoes: {
+      botoes: {
+        iniciar: true,
+        desistir: true,
+        concluir: true
+      },
+      progresso: {
+        porcentagem: 0,
+        checkboxes: []
+      },
+      quiz: {
+        ativo: false,
+        perguntas: [],
+        respostas: [],
+        corretas: []
+      }
+    },
+    recompensas: {
+      xpSabedoria: 30,
+      moedasFe: 15,
+      armadura: {
+        capacete: 0,
+        espada: 0,
+        escudo: 0,
+        couraca: 0,
+        sandalias: 0,
+        oracao: 0
+      },
+      consumiveis: [
+        { tipo: 'Bíblia Sagrada', quantidade: 1, duracao: 'permanente' }
+      ]
+    },
+    penalidades: {
+      descricao: '+1 Pecado por negligenciar a leitura.',
+      efeitos: {
+        pecado: 1,
+        perdaXp: 5
+      }
+    },
+    quizDados: {
+      ativo: false,
+      questoes: [],
+      acertos: 0,
+      erros: 0
+    },
+    metricaEspiritual: {
+      sabedoria: 30,
+      fe: 15,
+      pecado: 0,
+      espirito: 8,
+      salvacao: 3
+    }
+  },
   {
     id: 100,
     categoria: 'acao',
@@ -1005,192 +1191,6 @@ export const missions: Mission[] = [
       pecado: 0,
       espirito: 10,
       salvacao: 15
-    }
-  },
-  {
-    id: 106,
-    categoria: 'quiz',
-    tags: ['palavra', 'biblia', 'armadura', 'efesios'],
-    titulo: 'Espada do Espírito',
-    descricao: 'Estude Efésios 6:17b - "E a espada do Espírito, que é a palavra de Deus". Aprenda sobre o poder da Palavra de Deus como arma ofensiva.',
-    tipoMissao: 'diaria',
-    nivelDificuldade: 'comum',
-    tempoRestante: '24h',
-    status: 'ativa',
-    dataInicio: now,
-    dataExpiracao: now + oneDay,
-    restricoes: {
-      somenteCasado: false,
-      somenteBatizado: false,
-      requerSalvo: false
-    },
-    elementos: {
-      icone: 'Sword',
-      corTema: '#C0C0C0',
-      background: 'linear-gradient(135deg, #C0C0C0 0%, #808080 100%)'
-    },
-    interacoes: {
-      botoes: {
-        iniciar: true,
-        desistir: true,
-        concluir: false
-      },
-      progresso: {
-        porcentagem: 0,
-        checkboxes: []
-      },
-      quiz: {
-        ativo: true,
-        perguntas: [
-          'Por que a Palavra de Deus é uma espada?',
-          'Como Jesus usou a espada do Espírito?',
-          'Como devemos usar esta arma?'
-        ],
-        respostas: [],
-        corretas: []
-      }
-    },
-    recompensas: {
-      xpSabedoria: 50,
-      moedasFe: 20,
-      armadura: {
-        capacete: 0,
-        espada: 1,
-        escudo: 0,
-        couraca: 0,
-        sandalias: 0,
-        oracao: 0
-      },
-      consumiveis: []
-    },
-    penalidades: {
-      descricao: '+1 Pecado por desistir.',
-      efeitos: {
-        pecado: 1,
-        perdaXp: 10
-      }
-    },
-    quizDados: {
-      ativo: true,
-      questoes: [
-        {
-          id: 1,
-          pergunta: 'Por que a Palavra de Deus é comparada a uma espada?',
-          opcoes: [
-            'É nossa única arma ofensiva, penetra e corta verdades espirituais',
-            'Porque machuca as pessoas',
-            'Porque é afiada',
-            'Porque é de metal'
-          ],
-          correta: 'É nossa única arma ofensiva, penetra e corta verdades espirituais'
-        },
-        {
-          id: 2,
-          pergunta: 'Como Jesus usou a espada do Espírito contra Satanás?',
-          opcoes: [
-            'Citando as Escrituras durante a tentação no deserto',
-            'Com uma espada literal',
-            'Apenas orando',
-            'Ignorando o diabo'
-          ],
-          correta: 'Citando as Escrituras durante a tentação no deserto'
-        },
-        {
-          id: 3,
-          pergunta: 'Como devemos usar a espada do Espírito?',
-          opcoes: [
-            'Conhecendo, memorizando e aplicando a Palavra na batalha espiritual',
-            'Apenas lendo a Bíblia aos domingos',
-            'Carregando uma Bíblia',
-            'Decorando versículos sem entender'
-          ],
-          correta: 'Conhecendo, memorizando e aplicando a Palavra na batalha espiritual'
-        }
-      ],
-      acertos: 0,
-      erros: 0
-    },
-    metricaEspiritual: {
-      sabedoria: 50,
-      fe: 20,
-      pecado: 0,
-      espirito: 10,
-      salvacao: 5
-    }
-  },
-  {
-    id: 107,
-    categoria: 'acao',
-    tags: ['biblia', 'leitura', 'estudo'],
-    titulo: 'Adquirir a Bíblia Sagrada',
-    descricao: 'Comprometa-se a ler a Bíblia regularmente. Complete esta missão para receber a Bíblia Sagrada e desbloquear a área de Estudos.',
-    tipoMissao: 'diaria',
-    nivelDificuldade: 'comum',
-    tempoRestante: '24h',
-    status: 'ativa',
-    dataInicio: now,
-    dataExpiracao: now + oneDay,
-    restricoes: {
-      somenteCasado: false,
-      somenteBatizado: false,
-      requerSalvo: false
-    },
-    elementos: {
-      icone: 'BookOpen',
-      corTema: '#8B4513',
-      background: 'linear-gradient(135deg, #8B4513 0%, #A0522D 100%)'
-    },
-    interacoes: {
-      botoes: {
-        iniciar: true,
-        desistir: true,
-        concluir: true
-      },
-      progresso: {
-        porcentagem: 0,
-        checkboxes: []
-      },
-      quiz: {
-        ativo: false,
-        perguntas: [],
-        respostas: [],
-        corretas: []
-      }
-    },
-    recompensas: {
-      xpSabedoria: 30,
-      moedasFe: 15,
-      armadura: {
-        capacete: 0,
-        espada: 0,
-        escudo: 0,
-        couraca: 0,
-        sandalias: 0,
-        oracao: 0
-      },
-      consumiveis: [
-        { tipo: 'Bíblia Sagrada', quantidade: 1, duracao: 'permanente' }
-      ]
-    },
-    penalidades: {
-      descricao: '+1 Pecado por negligenciar a leitura.',
-      efeitos: {
-        pecado: 1,
-        perdaXp: 5
-      }
-    },
-    quizDados: {
-      ativo: false,
-      questoes: [],
-      acertos: 0,
-      erros: 0
-    },
-    metricaEspiritual: {
-      sabedoria: 30,
-      fe: 15,
-      pecado: 0,
-      espirito: 8,
-      salvacao: 3
     }
   },
 
